@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DbDate } from '../core/models/db-date';
+import * as fs from 'fs';
 
 @Component({
   selector: 'app-home',
@@ -7,20 +9,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  courseDates: DbDate[];
+
   constructor() { }
 
   ngOnInit() {
+    this.courseDates = [];
+
+    let aDate = new DbDate(24, 8, 2019, 0);
+    this.courseDates.push(aDate);
+
+    aDate = new DbDate(31, 8, 2019, 5);
+    this.courseDates.push(aDate);
+
+    aDate = new DbDate(17, 8, 2019, 10);
+    this.courseDates.push(aDate);
   }
 
+
+
   hasCourse(d: Date) {
-    return true;
+    for (const aDate of this.courseDates) {
+      if (aDate.day === d.getDate() && aDate.month === d.getMonth() + 1 && aDate.year === d.getFullYear()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   dateClass = (d: Date) => {
-    const date = d.getDate();
-
-    // Highlight the 1st and 20th day of each month.
-    return (this.hasCourse(d)) ? 'hasCourse' : (date === 7) ? 'courseIsEmpty' : undefined;
+    for (const aDate of this.courseDates) {
+      if (aDate.day === d.getDate() && aDate.month === d.getMonth() + 1 && aDate.year === d.getFullYear()) {
+        if (aDate.attendees === 0) {
+          return 'courseIsEmpty';
+        }
+        if (aDate.attendees === 10) {
+          return 'courseIsFull';
+        }
+        return 'hasCourse';
+      }
+    }
+    return undefined;
   }
 
 }

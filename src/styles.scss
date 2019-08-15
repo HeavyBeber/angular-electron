@@ -19,5 +19,11 @@ html, body {
     border-radius: 100%;
   }
 }
+.courseIsFull  {
+  .mat-calendar-body-cell-content {
+    background: green;
+    border-radius: 100%;
+  }
+}
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
