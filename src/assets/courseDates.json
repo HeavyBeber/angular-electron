@@ -1,0 +1,19 @@
+[
+  {
+    "day" : 17,
+    "month" : 8,
+    "year" : 2019,
+    "attendees" : 10
+  },{
+    "day" : 24,
+    "month" : 8,
+    "year" : 2019,
+    "attendees" : 5
+  },{
+    "day" : 31,
+    "month" : 8,
+    "year" : 2019,
+    "attendees" : 0
+  }
+]
+

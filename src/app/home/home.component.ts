@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DbDate } from '../core/models/db-date';
+
 import * as fs from 'fs';
 
 @Component({
@@ -16,14 +17,21 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.courseDates = [];
 
-    let aDate = new DbDate(24, 8, 2019, 0);
-    this.courseDates.push(aDate);
+    // tslint:disable-next-line: no-shadowed-variable
+    const fs = require('fs');
+    let objs: any;
 
-    aDate = new DbDate(31, 8, 2019, 5);
-    this.courseDates.push(aDate);
+    fs.readFile('src/assets/courseDates.json', (err, data) => {
+      if (err) {
+        throw err;
+      }
+      objs = JSON.parse(data);
+      for (const  obj of objs) {
+        this.courseDates.push(obj);
+      }
+    });
 
-    aDate = new DbDate(17, 8, 2019, 10);
-    this.courseDates.push(aDate);
+
   }
 
 
