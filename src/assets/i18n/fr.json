@@ -1,10 +1,16 @@
 {
   "PAGES": {
       "HOME": {
-          "TITLE": "Plateforme Manageuriale des cours d'éducations donnés par Dr. Océane Richard",
+          "TITLE": "Gestion cours d'éducation",
           "CALENDAR": {
             "TITLE": "Calendrier des cours",
-            "DATEPICKER": "Choisir une date"
+            "DATEPICKER": "Choisir une date",
+            "NEXTCOURSE": "Prochain cours le : "
+          },
+          "CLIENTS": {
+            "TITLE": "Clients",
+            "CREATE": "Ajouter un client",
+            "PAYEMENT": "Payer un cours"
           }
       }
   }

@@ -1,63 +1,166 @@
 import { Component, OnInit } from '@angular/core';
-import { DbDate } from '../core/models/db-date';
-
-import * as fs from 'fs';
+import { DbCourse } from '../core/models/db-course';
+import { DbCustomer } from '../core/models/db-customer';
+import { CreateNewClientDialogComponent } from '../create-new-client-dialog/create-new-client-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}]
 })
 export class HomeComponent implements OnInit {
 
-  courseDates: DbDate[];
+  courses: DbCourse[];
+  customers: DbCustomer[];
+  nextCourse: DbCourse = new DbCourse(1, 1, 1, 0, []);
 
-  constructor() { }
+  constructor(public dialog: MatDialog) {
+  }
 
   ngOnInit() {
-    this.courseDates = [];
+    this.courses = [];
+    this.customers = [];
 
     // tslint:disable-next-line: no-shadowed-variable
     const fs = require('fs');
     let objs: any;
 
-    fs.readFile('src/assets/courseDates.json', (err, data) => {
+    fs.readFile('./database/courseDates.json', (err, data) => {
       if (err) {
         throw err;
       }
       objs = JSON.parse(data);
       for (const  obj of objs) {
-        this.courseDates.push(obj);
+        this.pushCourseInCourses(obj);
       }
+      this.nextCourse = this.courses[0];
     });
 
+    fs.readFile('./database/customers.json', (err, data) => {
+      if (err) {
+        throw err;
+      }
+      objs = JSON.parse(data);
+      for (const  obj of objs) {
+        console.log(obj);
+        this.pushCustomerInCustomers(obj);
+      }
+    });
+ }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CreateNewClientDialogComponent, {
+      data: {}
+    });
+
+    dialogRef. afterClosed().subscribe(result => {
+      if (result) {
+        this.pushCustomerInCustomers(new DbCustomer(this.nextCustomerId(),
+                                                    result.firstName,
+                                                    result.lastName,
+                                                    result.puppy,
+                                                    result.birthdate,
+                                                    result.comments,
+                                                    2));
+        const fs = require('fs');
+        fs.writeFile('./database/customers.json', JSON.stringify(this.customers), (err) => {
+          if (err) {
+            throw err;
+          }
+          console.log(JSON.stringify(this.customers));
+        });
+      }
+    });
   }
 
-
-
-  hasCourse(d: Date) {
-    for (const aDate of this.courseDates) {
-      if (aDate.day === d.getDate() && aDate.month === d.getMonth() + 1 && aDate.year === d.getFullYear()) {
-        return true;
+  nextCustomerId() {
+    let maxId = -1;
+    for (const aCust of this.customers) {
+      if (aCust.id > maxId) {
+        maxId = aCust.id;
       }
     }
-    return false;
+    return maxId + 1 ;
   }
 
-  dateClass = (d: Date) => {
-    for (const aDate of this.courseDates) {
-      if (aDate.day === d.getDate() && aDate.month === d.getMonth() + 1 && aDate.year === d.getFullYear()) {
-        if (aDate.attendees === 0) {
+  pushCourseInCourses(course: DbCourse) {
+    if (this.courses.length === 0) {
+      this.courses.push(course);
+    } else if (this.compareCourses(course, this.courses[0])) {
+        this.courses.unshift(course);
+    } else {
+      const first = this.courses.shift();
+      this.pushCourseInCourses(course);
+      this.courses.unshift(first);
+    }
+  }
+
+  pushCustomerInCustomers(customer: DbCustomer) {
+    if (this.customers.length === 0) {
+      this.customers.push(customer);
+    } else if (this.compareCustomers(customer, this.customers[0])) {
+        this.customers.unshift(customer);
+    } else {
+      const first = this.customers.shift();
+      this.pushCustomerInCustomers(customer);
+      this.customers.unshift(first);
+    }
+  }
+
+  compareCourses(one: DbCourse, other: DbCourse) {
+    const compYear = one.year < other.year;
+    const compMonth = one.year === other.year && one.month < other.month;
+    const compDay = one.year === other.year && one.month === other.month && one.day < other.day;
+
+    return compYear || compMonth || compDay;
+  }
+
+  compareCustomers(one: DbCustomer, other: DbCustomer) {
+    const compLastName = one.lastName < other.lastName;
+    const compFirstName = one.lastName ===  other.lastName && one.firstName < other.firstName;
+
+    return compLastName || compFirstName;
+  }
+
+  dateClass = (m: Moment) => {
+    for (const aCourse of this.courses) {
+      if (aCourse.day === m.date() && aCourse.month === m.month() && aCourse.year === m.year()) {
+        if (aCourse.attendees.length === 0) {
           return 'courseIsEmpty';
         }
-        if (aDate.attendees === 10) {
+        if (aCourse.attendees.length >= aCourse.maxAttendee) {
           return 'courseIsFull';
         }
         return 'hasCourse';
       }
     }
     return undefined;
+  }
+
+  printDbCourse(courses: DbCourse[]) {
+    let res = '';
+    for (const aCourse of courses) {
+      res += aCourse.year + '/' + aCourse.month + '/' + aCourse.day + ' ' + aCourse.attendees + '/' + aCourse.maxAttendee + ' ';
+    }
+    return res;
+  }
+
+  formatMonth(month: number) {
+    const realMonth = month + 1;
+
+    if (realMonth.toString().length === 1) {
+      return '0' + realMonth;
+    }
+    return realMonth;
+  }
+
+  getNextDate() {
+    return this.nextCourse.day + '/' + this.formatMonth(this.nextCourse.month) + '/' + this.nextCourse.year;
   }
 
 }

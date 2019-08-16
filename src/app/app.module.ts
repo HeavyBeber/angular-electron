@@ -20,6 +20,9 @@ import { AppComponent } from './app.component';
 
 // Angular materials
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CreateNewClientDialogComponent } from './create-new-client-dialog/create-new-client-dialog.component';
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -27,7 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CreateNewClientDialogComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -43,9 +46,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  entryComponents: [CreateNewClientDialogComponent],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,0 +1,29 @@
+[
+  {
+     "birthdate":"2019-04-03T22:00:00.000Z",
+     "comments":"Chien mordeur",
+     "firstName":"Roger",
+     "id":1,
+     "lastName":"Halliday",
+     "paidCourses":1,
+     "puppy":"Doggo"
+  },
+  {
+     "birthdate":"2019-01-022T22:00:00.000Z",
+     "comments":"Ne sait pas s'assoir",
+     "firstName":"Sasha",
+     "id":3,
+     "lastName":"Lavandowski",
+     "paidCourses":5,
+     "puppy":"Petra"
+  },
+  {
+     "birthdate":"2018-11-09T22:00:00.000Z",
+     "comments":"HSHA",
+     "firstName":"Danny",
+     "id":2,
+     "lastName":"Write",
+     "paidCourses":0,
+     "puppy":"Jul"
+  }
+]

@@ -10,27 +10,44 @@
   -webkit-background-size: cover; /* pour anciens Chrome et Safari */
   background-size: cover; /* version standardisée */
 
-  .card{
-    height: 20%;
-    padding: 0px;
-    min-width: 100%;
+  .calendarCard{
+    padding: 3%;
     border-radius: 20px;
-    border-color: red !important;
-
+    min-width: 40%;
+    height: 20%;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-right: 8%;
     .header {
-      padding-top:20px;
       font-size : 3rem;
       font-weight: bold;
 
     }
 
     .content {
-      padding-top: 20px;
-      padding-left: 50px;
+      padding: 3%;
+    }
+
+  }
+  .clientCard{
+    padding: 3%;
+    border-radius: 20px;
+    min-width: 40%;
+    height: 20%;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-right: 8%;
+    .header {
+      font-size : 3rem;
+      font-weight: bold;
+
+    }
+
+    .content {
+      padding: 3%;
     }
 
   }
 }
+
 
 .title {
   color: white;
