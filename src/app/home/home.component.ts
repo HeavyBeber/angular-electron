@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DbCourse } from '../core/models/db-course';
 import { DbCustomer } from '../core/models/db-customer';
 import { CreateNewClientDialogComponent } from '../create-new-client-dialog/create-new-client-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Moment } from 'moment';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,9 @@ import { Moment } from 'moment';
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'}]
 })
 export class HomeComponent implements OnInit {
+
+  @Input()
+  selectedDate: Moment;
 
   courses: DbCourse[];
   customers: DbCustomer[];
@@ -47,15 +52,14 @@ export class HomeComponent implements OnInit {
       }
       objs = JSON.parse(data);
       for (const  obj of objs) {
-        console.log(obj);
         this.pushCustomerInCustomers(obj);
       }
     });
  }
 
-  openDialog(): void {
+  openCustomerDialog(): void {
     const dialogRef = this.dialog.open(CreateNewClientDialogComponent, {
-      data: {}
+      data: {paidCourses: 0}
     });
 
     dialogRef. afterClosed().subscribe(result => {
@@ -161,6 +165,19 @@ export class HomeComponent implements OnInit {
 
   getNextDate() {
     return this.nextCourse.day + '/' + this.formatMonth(this.nextCourse.month) + '/' + this.nextCourse.year;
+  }
+  getSelectedDate() {
+    if (this.selectedDate) {
+      return this.selectedDate.day() + '/' + this.formatMonth(this.selectedDate.month()) + '/' + this.selectedDate.year();
+    }
+    return '';
+  }
+
+  createCourse() {
+    const courseToAdd = new DbCourse(this.selectedDate.day(),
+                                    this.selectedDate.month(),
+                                    this.selectedDate.year(),
+                                    2, []);
   }
 
 }

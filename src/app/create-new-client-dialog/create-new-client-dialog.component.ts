@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DbCustomer } from '../core/models/db-customer';
-import { Moment } from 'moment';
 import { NewClientDialogData } from '../core/models/new-client-dialog-data';
 
 
@@ -23,8 +21,14 @@ export class CreateNewClientDialogComponent implements OnInit {
     this.dialogRef.close(this.data);
   }
 
-  saveCust(): void{
-    this.data.okPressed = true;
-    this.dialogRef.close(this.data);
+  saveCust(): void {
+    if (this.isValid(this.data)) {
+      this.data.okPressed = true;
+      this.dialogRef.close(this.data);
+    }
+  }
+
+  isValid(data: NewClientDialogData) {
+    return data.firstName && data.lastName && data.puppy && data.birthdate;
   }
 }

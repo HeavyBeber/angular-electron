@@ -2,6 +2,9 @@
     <span class="title">
       {{ 'PAGES.HOME.TITLE' | translate }}
     </span>
+    <span style="text-align: right" class="title">
+      {{ getSelectedDate() }}
+    </span>
   </mat-toolbar>
 <div class="container">
   <mat-card class="calendarCard">
@@ -9,22 +12,29 @@
         {{ 'PAGES.HOME.CALENDAR.TITLE' | translate }}
     </mat-card-header>
     <mat-card-content class="content">
-      <mat-form-field style="margin-right: 5%">
+      <div>
+        <mat-form-field appearance="legacy" style="margin-right: 5%">
         <!-- TODO : factoriser placeholder -->
-        <input matInput [matDatepicker]="picker" placeholder="Choisir une date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
-      </mat-form-field>
-      {{ 'PAGES.HOME.CALENDAR.NEXTCOURSE' | translate }} {{getNextDate()}}
+          <input [(ngModel)]="selectedDate" matInput [matDatepicker]="picker" placeholder="Choisir une date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+        </mat-form-field>
+        {{ 'PAGES.HOME.CALENDAR.NEXTCOURSE' | translate }} {{getNextDate()}}
+      </div>
+      <div>
+        <button
+          mat-raised-button (click)="createCourse()">
+            {{'PAGES.HOME.CALENDAR.CREATE' | translate}}
+        </button>
+      </div>
     </mat-card-content>
   </mat-card>
-
   <mat-card class="clientCard">
     <mat-card-header class="header">
         {{ 'PAGES.HOME.CLIENTS.TITLE' | translate }}
     </mat-card-header>
     <mat-card-content class="content">
-      <button mat-raised-button (click)="openDialog()">{{ 'PAGES.HOME.CLIENTS.CREATE' | translate }}</button>
+      <button mat-raised-button (click)="openCustomerDialog()">{{ 'PAGES.HOME.CLIENTS.CREATE' | translate }}</button>
     </mat-card-content>
   </mat-card>
 </div>
