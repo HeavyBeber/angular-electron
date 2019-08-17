@@ -10,6 +10,10 @@
           },
           "CLIENTS": {
             "TITLE": "Clients",
+            "CREATE": "Ajouter un client"
+          },
+          "COURSE": {
+            "TITLE": "Cours du : ",
             "CREATE": "Ajouter un client",
             "PAYEMENT": "Payer un cours"
           }

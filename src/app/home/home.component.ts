@@ -17,9 +17,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 })
 export class HomeComponent implements OnInit {
 
-  @Input()
   selectedDate: Moment;
-
   courses: DbCourse[];
   customers: DbCustomer[];
   nextCourse: DbCourse = new DbCourse(1, 1, 1, 0, []);
@@ -168,13 +166,13 @@ export class HomeComponent implements OnInit {
   }
   getSelectedDate() {
     if (this.selectedDate) {
-      return this.selectedDate.day() + '/' + this.formatMonth(this.selectedDate.month()) + '/' + this.selectedDate.year();
+      return this.selectedDate.date() + '/' + this.formatMonth(this.selectedDate.month()) + '/' + this.selectedDate.year();
     }
     return '';
   }
 
   createCourse() {
-    const courseToAdd = new DbCourse(this.selectedDate.day(),
+    const courseToAdd = new DbCourse(this.selectedDate.dayOfYear(),
                                     this.selectedDate.month(),
                                     this.selectedDate.year(),
                                     2, []);
