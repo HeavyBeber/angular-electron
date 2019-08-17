@@ -1,11 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DbCourse } from '../core/models/db-course';
 import { DbCustomer } from '../core/models/db-customer';
 import { CreateNewClientDialogComponent } from '../create-new-client-dialog/create-new-client-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Moment } from 'moment';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 
 @Component({
@@ -20,47 +19,55 @@ export class HomeComponent implements OnInit {
   selectedDate: Moment;
   courses: DbCourse[];
   customers: DbCustomer[];
-  nextCourse: DbCourse = new DbCourse(1, 1, 1, 0, []);
+  nextCourse: DbCourse = new DbCourse(0, 0, 0, 0, []);
+  selectedCourses: DbCourse[];
 
   constructor(public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.courses = [];
-    this.customers = [];
+      this.courses = [];
+      this.customers = [];
 
-    // tslint:disable-next-line: no-shadowed-variable
-    const fs = require('fs');
-    let objs: any;
+      // tslint:disable-next-line: no-shadowed-variable
+      const fs = require('fs');
+      let objs: any;
 
-    fs.readFile('./database/courseDates.json', (err, data) => {
-      if (err) {
-        throw err;
-      }
-      objs = JSON.parse(data);
-      for (const  obj of objs) {
-        this.pushCourseInCourses(obj);
-      }
-      this.nextCourse = this.courses[0];
-    });
+      fs.readFile('./database/courseDates.json', (err, data) => {
+        if (err) {
+          throw err;
+        }
+        objs = JSON.parse(data);
+        for (const  obj of objs) {
+          this.pushCourseInCourses(obj);
+        }
+        for (const course of this.courses) {
+          const now = new Date(Date.now());
+          if (this.nextCourse.year === 0 &&
+              this.compareCourses(new DbCourse(now.getDate(), now.getMonth(), now.getFullYear(), 0, []), course)) {
+            this.nextCourse = course;
+          }
+        }
+      });
 
-    fs.readFile('./database/customers.json', (err, data) => {
-      if (err) {
-        throw err;
-      }
-      objs = JSON.parse(data);
-      for (const  obj of objs) {
-        this.pushCustomerInCustomers(obj);
-      }
-    });
- }
+      fs.readFile('./database/customers.json', (err, data) => {
+        if (err) {
+          throw err;
+        }
+        objs = JSON.parse(data);
+        for (const  obj of objs) {
+          this.pushCustomerInCustomers(obj);
+        }
+      });
+
+  }
 
   openCustomerDialog(): void {
     const dialogRef = this.dialog.open(CreateNewClientDialogComponent, {
       data: {paidCourses: 0}
     });
 
-    dialogRef. afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.pushCustomerInCustomers(new DbCustomer(this.nextCustomerId(),
                                                     result.firstName,
@@ -74,7 +81,6 @@ export class HomeComponent implements OnInit {
           if (err) {
             throw err;
           }
-          console.log(JSON.stringify(this.customers));
         });
       }
     });
@@ -132,6 +138,9 @@ export class HomeComponent implements OnInit {
   dateClass = (m: Moment) => {
     for (const aCourse of this.courses) {
       if (aCourse.day === m.date() && aCourse.month === m.month() && aCourse.year === m.year()) {
+        if (m.isBefore(Date.now())) {
+          return 'pastCourse';
+        }
         if (aCourse.attendees.length === 0) {
           return 'courseIsEmpty';
         }
@@ -164,18 +173,48 @@ export class HomeComponent implements OnInit {
   getNextDate() {
     return this.nextCourse.day + '/' + this.formatMonth(this.nextCourse.month) + '/' + this.nextCourse.year;
   }
+
   getSelectedDate() {
     if (this.selectedDate) {
       return this.selectedDate.date() + '/' + this.formatMonth(this.selectedDate.month()) + '/' + this.selectedDate.year();
     }
-    return '';
+    return 'Pas de date sélectionnée';
   }
 
   createCourse() {
-    const courseToAdd = new DbCourse(this.selectedDate.dayOfYear(),
+    const courseToAdd = new DbCourse(this.selectedDate.date(),
                                     this.selectedDate.month(),
                                     this.selectedDate.year(),
-                                    2, []);
+                                    10, []);
+    this.pushCourseInCourses(courseToAdd);
+    const fs = require('fs');
+    fs.writeFile('./database/courseDates.json', JSON.stringify(this.courses), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
   }
 
+  isCourseSelected(c: DbCourse) {
+    return this.selectedDate &&
+           c.day === this.selectedDate.date() && c.month === this.selectedDate.month() && c.year === this.selectedDate.year();
+  }
+
+  getAttendees(course: DbCourse) {
+    const result = [];
+    for (const attendee of course.attendees) {
+      result.push(this.getAttendee(attendee));
+    }
+    return result;
+  }
+
+  getAttendee(i: number){
+    for (const cust of this.customers) {
+      if (cust.id === i) {
+        const now = new Date(Date.now());
+        const ageInMonth = 12 * (now.getFullYear() - new Date(cust.birthdate).getFullYear()) + now.getMonth() - new Date(cust.birthdate).getMonth();
+        return cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + ageInMonth + ')';
+      }
+    }
+  }
 }
