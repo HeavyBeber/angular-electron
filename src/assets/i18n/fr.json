@@ -10,7 +10,7 @@
           },
           "CLIENTS": {
             "TITLE": "Clients",
-            "CREATE": "Ajouter un client"
+            "CREATE": "Nouveau client"
           },
           "COURSE": {
             "TITLE": "Cours du : ",

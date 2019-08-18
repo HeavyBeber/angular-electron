@@ -122,7 +122,7 @@ export class HomeComponent implements OnInit {
 
   saveCustomers() {
     const fs = require('fs');
-    fs.writeFile('./database/customers.json', JSON.stringify(this.customers), (err) => {
+    fs.writeFile('./database/customers.json', JSON.stringify(this.customers, null, 2), (err) => {
       if (err) {
         throw err;
       }
@@ -131,7 +131,7 @@ export class HomeComponent implements OnInit {
 
   saveCourses() {
     const fs = require('fs');
-    fs.writeFile('./database/courseDates.json', JSON.stringify(this.courses), (err) => {
+    fs.writeFile('./database/courseDates.json', JSON.stringify(this.courses, null, 2), (err) => {
       if (err) {
         throw err;
       }
@@ -204,8 +204,9 @@ export class HomeComponent implements OnInit {
   }
 
   compareCustomers(one: DbCustomer, other: DbCustomer) {
-    const compLastName = one.firstName < other.firstName;
-    const compFirstName = one.firstName ===  other.firstName && one.lastName < other.lastName;
+    const compFirstName = one.firstName.toLowerCase() < other.firstName.toLowerCase();
+    const compLastName = one.firstName.toLowerCase() ===  other.firstName.toLowerCase() &&
+                         one.lastName.toLowerCase() < other.lastName.toLowerCase();
 
     return compLastName || compFirstName;
   }
@@ -325,21 +326,15 @@ export class HomeComponent implements OnInit {
   }
 
   deleteFromArray(e: any, arr: any[]): any[] {
-    console.log(e + ' ' + arr + ' enter method');
     if (arr.length === 0) {
-      console.log(e + ' ' + arr + ' end empty');
       return arr;
     }
     const head = arr.shift();
     if (head === e) {
-      console.log(e + ' ' + arr + ' end element found');
       return arr;
     }
-    console.log(e + ' ' + arr + ' start rec');
     arr = this.deleteFromArray(e, arr);
-    console.log(e + ' ' + arr + ' after rec');
     arr.unshift(head);
-    console.log(e + ' ' + arr + ' put elem');
     return arr;
   }
 
@@ -386,5 +381,23 @@ export class HomeComponent implements OnInit {
     }
     this.saveCustomers();
     this.selectedCust = undefined;
+  }
+
+  getTabNumbers() {
+    const result = [];
+    for (let i = 0 ; i < this.customers.length / 5 ; i++ ) {
+      result.push(i);
+    }
+    return result;
+  }
+
+  getTabCustomersString(i) {
+    const result = [];
+    this.getCustomersString().forEach((item, index) => {
+      if (index >= i * 5 && index < i * 5 + 5) {
+        result.push(item);
+      }
+    });
+    return result;
   }
 }

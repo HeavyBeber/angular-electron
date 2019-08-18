@@ -4,7 +4,7 @@
   flex-flow: row wrap;
   justify-content: space-evenly;
   align-content: flex-start;
-  padding : 2%;
+  padding : 1%;
 
 
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -14,9 +14,10 @@
   background-size: cover; /* version standardisée */
 
   .calendarCard{
-    padding: 3%;
+    padding: 1%;
     border-radius: 20px;
-    width: 40%;
+    max-height: 20%;
+    width: 47%;
     background-color: rgba(255, 255, 255, 0.7);
     .header {
       font-size : 3rem;
@@ -25,16 +26,17 @@
     }
 
     .content {
-      padding: 3%;
+      padding: 1%;
     }
 
   }
 
   .clientCard{
-    padding: 3%;
+    padding: 1%;
     border-radius: 20px;
-    width: 40%;
+    width: 47%;
     background-color: rgba(255, 255, 255, 0.7);
+    min-height: 43%;
     .header {
       font-size : 3rem;
       font-weight: bold;
@@ -42,16 +44,22 @@
     }
 
     .content {
-      padding: 3%;
+      padding: 1%;
+    }
+    .actions {
+      position: absolute;
+      left: 2%;
+      bottom: 4%;
     }
 
   }
 
   .courseCard{
-    padding: 3%;
+    padding: 1%;
     border-radius: 20px;
-    margin-top: 2%;
-    width: 89%;
+    margin-top: 1%;
+    max-height: 48%;
+    width: 97%;
     background-color: rgba(255, 255, 255, 0.7);
 
     .header {
@@ -61,7 +69,8 @@
     }
 
     .content {
-      padding: 3%;
+      padding: 1%;
+      max-height: 74%;
     }
 
   }
