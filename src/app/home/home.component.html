@@ -18,21 +18,30 @@
           </mat-form-field>
           {{ 'PAGES.HOME.CALENDAR.NEXTCOURSE' | translate }} {{getNextDate()}}
         </div>
-        <div>
-          <button
-            mat-raised-button [disabled]="!selectedDate" (click)="createCourse()">
-              {{'PAGES.HOME.CALENDAR.CREATE' | translate}}
-          </button>
-        </div>
       </mat-card-content>
+      <mat-card-actions>
+      <button
+        mat-raised-button [disabled]="!selectedDate" (click)="createCourse()">
+          {{'PAGES.HOME.CALENDAR.CREATE' | translate}}
+      </button>
+    </mat-card-actions>
     </mat-card>
     <mat-card class="clientCard">
       <mat-card-header class="header">
           {{ 'PAGES.HOME.CLIENTS.TITLE' | translate }}
       </mat-card-header>
-      <mat-card-content class="content">
+    <mat-card-content>
+      <div>
+          <mat-selection-list (selectionChange)="handleSelectionCust($event)">
+              <mat-list-option *ngFor="let customer of getCustomersString()"> {{customer}} </mat-list-option>
+            </mat-selection-list>
+      </div>
+    </mat-card-content>
+      <mat-card-actions>
         <button mat-raised-button (click)="openCustomerDialog()">{{ 'PAGES.HOME.CLIENTS.CREATE' | translate }}</button>
-      </mat-card-content>
+        <button mat-raised-button [disabled]="!selectedCust" (click)="editCust(selectedCust)">Editer</button>
+        <button mat-raised-button [disabled]="!selectedCust" (click)="deleteCust()">Supprimer</button>
+    </mat-card-actions>
     </mat-card>
 
         <mat-card class="courseCard">
@@ -42,13 +51,17 @@
             <mat-card-content class="content">
               <div *ngFor="let course of courses">
                 <div *ngIf="isCourseSelected(course)">
-                  Participants :
-                  <mat-list>
-                    <mat-list-item *ngFor="let attende of getAttendees(course)"> {{attende}} </mat-list-item>
-                  </mat-list>
+                  <p style="font-size: 1.5rem; text-decoration: underline">Participants :</p>
+                  <mat-selection-list (selectionChange)="handleSelection($event,course)">
+                    <mat-list-option *ngFor="let attende of getAttendees(course)"> {{attende}} </mat-list-option>
+                  </mat-selection-list>
                 </div>
               </div>
             </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button [disabled]="!selectedCustForCourse" (click)="editCust(selectedCustForCourse)">Editer</button>
+              <button mat-raised-button [disabled]="!selectedCustForCourse" (click)="deleteFromCourse()">Supprimer</button>
+            </mat-card-actions>
           </mat-card>
 
 </div>

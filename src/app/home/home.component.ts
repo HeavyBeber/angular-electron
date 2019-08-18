@@ -5,6 +5,7 @@ import { CreateNewClientDialogComponent } from '../create-new-client-dialog/crea
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Moment } from 'moment';
+import { MAT_SORT_HEADER_INTL_PROVIDER_FACTORY } from '@angular/material/sort';
 
 
 @Component({
@@ -16,11 +17,18 @@ import { Moment } from 'moment';
 })
 export class HomeComponent implements OnInit {
 
-  selectedDate: Moment;
   courses: DbCourse[];
   customers: DbCustomer[];
-  nextCourse: DbCourse = new DbCourse(0, 0, 0, 0, []);
+
+  nextCourse: DbCourse = new DbCourse(0, 0, 0, 0, 0, []);
+
+  selectedDate: Moment;
   selectedCourses: DbCourse[];
+
+  selectedCustForCourse: DbCustomer;
+  currentCourse: DbCourse;
+  selectedCust: DbCustomer;
+
 
   constructor(public dialog: MatDialog) {
   }
@@ -44,7 +52,7 @@ export class HomeComponent implements OnInit {
         for (const course of this.courses) {
           const now = new Date(Date.now());
           if (this.nextCourse.year === 0 &&
-              this.compareCourses(new DbCourse(now.getDate(), now.getMonth(), now.getFullYear(), 0, []), course)) {
+              this.compareCourses(new DbCourse(0, now.getDate(), now.getMonth(), now.getFullYear(), 0, []), course)) {
             this.nextCourse = course;
           }
         }
@@ -64,7 +72,10 @@ export class HomeComponent implements OnInit {
 
   openCustomerDialog(): void {
     const dialogRef = this.dialog.open(CreateNewClientDialogComponent, {
-      data: {paidCourses: 0}
+      data: {
+        paidCourses: 0,
+        stock: 0
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -75,16 +86,80 @@ export class HomeComponent implements OnInit {
                                                     result.puppy,
                                                     result.birthdate,
                                                     result.comments,
-                                                    2));
-        const fs = require('fs');
-        fs.writeFile('./database/customers.json', JSON.stringify(this.customers), (err) => {
-          if (err) {
-            throw err;
-          }
-        });
+                                                    result.paidCourses));
+        this.saveCustomers();
       }
     });
   }
+
+  editCust(cust) {
+    let custToUpdate = this.getCustFromId(cust.id);
+    const dialogRef = this.dialog.open(CreateNewClientDialogComponent, {
+      data: {
+        firstName: custToUpdate.firstName,
+        lastName: custToUpdate.lastName,
+        puppy: custToUpdate.puppy,
+        birthdate: custToUpdate.birthdate,
+        comments: custToUpdate.comments,
+        paidCourses: 0,
+        stock: custToUpdate.paidCourses,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        custToUpdate = new DbCustomer( custToUpdate.id,
+        result.firstName,
+        result.lastName,
+        result.puppy,
+        result.birthdate,
+        result.comments,
+        result.paidCourses + result.stock);
+        this.saveCust(custToUpdate);
+      }
+   });
+  }
+
+  saveCustomers() {
+    const fs = require('fs');
+    fs.writeFile('./database/customers.json', JSON.stringify(this.customers), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+  }
+
+  saveCourses() {
+    const fs = require('fs');
+    fs.writeFile('./database/courseDates.json', JSON.stringify(this.courses), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+  }
+
+  saveCourse(course: DbCourse) {
+    this.courses = this.deleteFromArray(this.getCourseFromId(course.id), this.courses);
+    this.pushCourseInCourses(course);
+    this.saveCourses();
+  }
+
+  saveCust(cust: DbCustomer) {
+    this.customers = this.deleteFromArray(this.getCustFromId(cust.id), this.customers);
+    this.pushCustomerInCustomers(cust);
+    this.saveCustomers();
+  }
+
+  nextCourseId() {
+    let maxId = -1;
+    for (const aCourse of this.courses) {
+      if (aCourse.id > maxId) {
+        maxId = aCourse.id;
+      }
+    }
+    return maxId + 1 ;
+  }
+
 
   nextCustomerId() {
     let maxId = -1;
@@ -129,8 +204,8 @@ export class HomeComponent implements OnInit {
   }
 
   compareCustomers(one: DbCustomer, other: DbCustomer) {
-    const compLastName = one.lastName < other.lastName;
-    const compFirstName = one.lastName ===  other.lastName && one.firstName < other.firstName;
+    const compLastName = one.firstName < other.firstName;
+    const compFirstName = one.firstName ===  other.firstName && one.lastName < other.lastName;
 
     return compLastName || compFirstName;
   }
@@ -182,17 +257,13 @@ export class HomeComponent implements OnInit {
   }
 
   createCourse() {
-    const courseToAdd = new DbCourse(this.selectedDate.date(),
+    const courseToAdd = new DbCourse(this.nextCourseId(),
+                                    this.selectedDate.date(),
                                     this.selectedDate.month(),
                                     this.selectedDate.year(),
                                     10, []);
     this.pushCourseInCourses(courseToAdd);
-    const fs = require('fs');
-    fs.writeFile('./database/courseDates.json', JSON.stringify(this.courses), (err) => {
-      if (err) {
-        throw err;
-      }
-    });
+    this.saveCourses();
   }
 
   isCourseSelected(c: DbCourse) {
@@ -203,18 +274,117 @@ export class HomeComponent implements OnInit {
   getAttendees(course: DbCourse) {
     const result = [];
     for (const attendee of course.attendees) {
-      result.push(this.getAttendee(attendee));
+      result.push(this.attendeeToString(attendee));
     }
     return result;
   }
 
-  getAttendee(i: number){
+  attendeeToString(i: number) {
+    const cust = this.getCustFromId(i);
+    const now = new Date(Date.now());
+    const ageInMonth = 12 * (now.getFullYear() - new Date(cust.birthdate).getFullYear()) +
+                              now.getMonth() - new Date(cust.birthdate).getMonth();
+    return cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + ageInMonth + ')';
+  }
+
+  getCustomersString() {
+    const result = [];
     for (const cust of this.customers) {
-      if (cust.id === i) {
-        const now = new Date(Date.now());
-        const ageInMonth = 12 * (now.getFullYear() - new Date(cust.birthdate).getFullYear()) + now.getMonth() - new Date(cust.birthdate).getMonth();
-        return cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + ageInMonth + ')';
+      const now = new Date(Date.now());
+      const ageInMonth = 12 * (now.getFullYear() - new Date(cust.birthdate).getFullYear()) +
+                                now.getMonth() - new Date(cust.birthdate).getMonth();
+      result.push(cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + ageInMonth + ')');
+    }
+    return result;
+  }
+
+  getCustFromText(c: string) {
+    const stringTab = c.split(/[\s,(]+/);
+    for (const cust of this.customers) {
+      if (cust.firstName === stringTab[0] && cust.lastName === stringTab[1] && cust.puppy === stringTab[2]) {
+        return cust;
       }
     }
+  }
+
+  handleSelectionCust(event) {
+    if (event.option.selected) {
+      event.source.deselectAll();
+      event.option._setSelected(true);
+      this.selectedCust = this.getCustFromText(event.option._text.nativeElement.innerText);
+    }
+  }
+
+  handleSelection(event, course: DbCourse) {
+    if (event.option.selected) {
+      this.currentCourse = course;
+      event.source.deselectAll();
+      event.option._setSelected(true);
+      this.selectedCustForCourse = this.getCustFromText(event.option._text.nativeElement.innerText);
+    }
+  }
+
+  deleteFromArray(e: any, arr: any[]): any[] {
+    console.log(e + ' ' + arr + ' enter method');
+    if (arr.length === 0) {
+      console.log(e + ' ' + arr + ' end empty');
+      return arr;
+    }
+    const head = arr.shift();
+    if (head === e) {
+      console.log(e + ' ' + arr + ' end element found');
+      return arr;
+    }
+    console.log(e + ' ' + arr + ' start rec');
+    arr = this.deleteFromArray(e, arr);
+    console.log(e + ' ' + arr + ' after rec');
+    arr.unshift(head);
+    console.log(e + ' ' + arr + ' put elem');
+    return arr;
+  }
+
+  getCourseFromId(id: number) {
+    for (const course of this.courses) {
+      if (course.id === id) {
+        return course;
+      }
+    }
+  }
+
+  getCustFromId(id: number) {
+    for (const cust of this.customers) {
+      if (cust.id === id) {
+        return cust;
+      }
+    }
+  }
+
+  deleteFromCourse() {
+    this.currentCourse.attendees = this.deleteFromArray(this.selectedCustForCourse.id, this.currentCourse.attendees);
+    this.saveCourse(this.currentCourse);
+
+    this.selectedCustForCourse.paidCourses = this.selectedCustForCourse.paidCourses + 1;
+    this.saveCust(this.selectedCustForCourse);
+    this.selectedCustForCourse = undefined;
+  }
+
+  deleteCust() {
+    const newCourses = this.courses;
+    this.courses = [];
+    for (const course of newCourses) {
+      course.attendees = this.deleteFromArray(this.selectedCust.id, course.attendees);
+      this.pushCourseInCourses(course);
+    }
+    this.saveCourses();
+
+    const newCusts = this.customers;
+    this.customers = [];
+    for (const cust of newCusts) {
+      if (cust.id !== this.selectedCust.id) {
+        this.pushCustomerInCustomers(cust);
+      }
+    }
+    this.saveCustomers();
+    this.selectedCust = undefined;
   }
 }
