@@ -15,14 +15,14 @@ html, body {
 
 .courseIsEmpty  {
   .mat-calendar-body-cell-content {
-    background: rgb(105, 0, 0);
+    background: rgb(0, 255, 0);
     border-radius: 100%;
   }
 }
 
 .courseIsFull  {
   .mat-calendar-body-cell-content {
-    background: green;
+    background: rgb(255, 0, 0);
     border-radius: 100%;
   }
 }

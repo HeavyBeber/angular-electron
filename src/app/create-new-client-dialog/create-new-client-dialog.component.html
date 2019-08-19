@@ -1,4 +1,5 @@
-<h1 mat-dialog-title>Création d'un nouveau client</h1>
+<h1 mat-dialog-title *ngIf="!data.isEdit">Nouveau client</h1>
+<h1 mat-dialog-title *ngIf="data.isEdit">Fiche client</h1>
 <div mat-dialog-content>
   <div>
     <mat-form-field appearance="legacy">

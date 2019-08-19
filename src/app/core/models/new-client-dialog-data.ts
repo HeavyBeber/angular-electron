@@ -7,4 +7,5 @@ export interface NewClientDialogData {
   birthdate: Date;
   comments: string;
   stock: number;
+  isEdit: boolean;
 }

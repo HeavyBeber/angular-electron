@@ -5,7 +5,6 @@ import { CreateNewClientDialogComponent } from '../create-new-client-dialog/crea
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Moment } from 'moment';
-import { MAT_SORT_HEADER_INTL_PROVIDER_FACTORY } from '@angular/material/sort';
 
 
 @Component({
@@ -17,65 +16,67 @@ import { MAT_SORT_HEADER_INTL_PROVIDER_FACTORY } from '@angular/material/sort';
 })
 export class HomeComponent implements OnInit {
 
+
   courses: DbCourse[];
   customers: DbCustomer[];
 
   nextCourse: DbCourse = new DbCourse(0, 0, 0, 0, 0, []);
 
   selectedDate: Moment;
-  selectedCourses: DbCourse[];
+  selectedCourses: DbCourse[] = [];
 
   selectedCustForCourse: DbCustomer;
   currentCourse: DbCourse;
   selectedCust: DbCustomer;
 
-
   constructor(public dialog: MatDialog) {
   }
 
   ngOnInit() {
-      this.courses = [];
-      this.customers = [];
+    this.courses = [];
+    this.customers = [];
 
-      // tslint:disable-next-line: no-shadowed-variable
-      const fs = require('fs');
-      let objs: any;
+    // tslint:disable-next-line: no-shadowed-variable
+    const fs = require('fs');
+    let objs: any;
 
-      fs.readFile('./database/courseDates.json', (err, data) => {
-        if (err) {
-          throw err;
+    fs.readFile('./database/courseDates.json', (err, data) => {
+      if (err) {
+        throw err;
+      }
+      objs = JSON.parse(data);
+      for (const  obj of objs) {
+        this.pushCourseInCourses(obj);
+      }
+      for (const course of this.courses) {
+        const now = new Date(Date.now());
+        if (this.nextCourse.year === 0 &&
+            this.compareCourses(new DbCourse(0, now.getDate(), now.getMonth(), now.getFullYear(), 0, []), course)) {
+          this.nextCourse = course;
         }
-        objs = JSON.parse(data);
-        for (const  obj of objs) {
-          this.pushCourseInCourses(obj);
-        }
-        for (const course of this.courses) {
-          const now = new Date(Date.now());
-          if (this.nextCourse.year === 0 &&
-              this.compareCourses(new DbCourse(0, now.getDate(), now.getMonth(), now.getFullYear(), 0, []), course)) {
-            this.nextCourse = course;
-          }
-        }
-      });
+      }
+    });
 
-      fs.readFile('./database/customers.json', (err, data) => {
-        if (err) {
-          throw err;
-        }
-        objs = JSON.parse(data);
-        for (const  obj of objs) {
-          this.pushCustomerInCustomers(obj);
-        }
-      });
-
+    fs.readFile('./database/customers.json', (err, data) => {
+      if (err) {
+        throw err;
+      }
+      objs = JSON.parse(data);
+      for (const  obj of objs) {
+        this.pushCustomerInCustomers(obj);
+      }
+    });
+    setTimeout(() => {}, 500);
   }
 
   openCustomerDialog(): void {
     const dialogRef = this.dialog.open(CreateNewClientDialogComponent, {
       data: {
         paidCourses: 0,
-        stock: 0
-      }
+        stock: 0,
+        isEdit: false
+      },
+      width: '300px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -96,6 +97,7 @@ export class HomeComponent implements OnInit {
     let custToUpdate = this.getCustFromId(cust.id);
     const dialogRef = this.dialog.open(CreateNewClientDialogComponent, {
       data: {
+        isEdit: true,
         firstName: custToUpdate.firstName,
         lastName: custToUpdate.lastName,
         puppy: custToUpdate.puppy,
@@ -103,7 +105,8 @@ export class HomeComponent implements OnInit {
         comments: custToUpdate.comments,
         paidCourses: 0,
         stock: custToUpdate.paidCourses,
-      }
+      },
+      width: '300px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -272,6 +275,14 @@ export class HomeComponent implements OnInit {
            c.day === this.selectedDate.date() && c.month === this.selectedDate.month() && c.year === this.selectedDate.year();
   }
 
+  getSelectedCourses() {
+    for (const course of this.courses) {
+      if(this.isCourseSelected(course)) {
+        this.selectedCourses.push(course);
+      }
+    }
+  }
+
   getAttendees(course: DbCourse) {
     const result = [];
     for (const attendee of course.attendees) {
@@ -399,5 +410,16 @@ export class HomeComponent implements OnInit {
       }
     });
     return result;
+  }
+
+  addCustToSelectedCourse(cust) {
+    this.getSelectedCourses();
+    if (this.selectedCourses.length === 1) {
+      if (this.selectedCourses[0].attendees.indexOf(cust.id) === -1) {
+        this.selectedCourses[0].attendees.push(cust.id);
+        cust.paidCourses = cust.paidCourses - 1;
+        this.saveCust(cust);
+      }
+    }
   }
 }
