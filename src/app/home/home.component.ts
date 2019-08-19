@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   nextCourse: DbCourse = new DbCourse(0, 0, 0, 0, 0, []);
 
   selectedDate: Moment;
-  selectedCourses: DbCourse[] = [];
+  selectedCourses: DbCourse[];
 
   selectedCustForCourse: DbCustomer;
   currentCourse: DbCourse;
@@ -276,8 +276,9 @@ export class HomeComponent implements OnInit {
   }
 
   getSelectedCourses() {
+    this.selectedCourses = [];
     for (const course of this.courses) {
-      if(this.isCourseSelected(course)) {
+      if (this.isCourseSelected(course)) {
         this.selectedCourses.push(course);
       }
     }
@@ -419,6 +420,7 @@ export class HomeComponent implements OnInit {
         this.selectedCourses[0].attendees.push(cust.id);
         cust.paidCourses = cust.paidCourses - 1;
         this.saveCust(cust);
+        this.saveCourse(this.selectedCourses[0]);
       }
     }
   }

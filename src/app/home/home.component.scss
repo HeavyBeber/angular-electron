@@ -72,6 +72,18 @@
     .content {
       padding: 1%;
       max-height: 74%;
+
+      .attendees {
+        font-size: 1.5rem;
+        text-decoration: underline;
+      }
+      .numberOfAttendees {
+        color:blue;
+        margin-left: 2%;
+        font-size: 1.5rem;
+        position:absolute;
+        right:3%
+      }
     }
     .actions {
       position: absolute;
