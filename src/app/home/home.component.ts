@@ -5,6 +5,7 @@ import { CreateNewClientDialogComponent } from '../create-new-client-dialog/crea
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Moment } from 'moment';
+import { SelectCourseComponent } from '../select-course/select-course.component';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
   selectedCustForCourse: DbCustomer;
   currentCourse: DbCourse;
   selectedCust: DbCustomer;
+  chosenCourseId: number;
 
   constructor(public dialog: MatDialog) {
   }
@@ -91,6 +93,39 @@ export class HomeComponent implements OnInit {
         this.saveCustomers();
       }
     });
+  }
+
+  openCourseChoice(mode: string): void {
+    const selectedCoursesId = [];
+    for (const course of this.selectedCourses) {
+      selectedCoursesId.push(course.id);
+    }
+
+    const dialogRef = this.dialog.open(SelectCourseComponent, {
+      data: {
+        courseList: selectedCoursesId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (mode === 'delete') {
+          this.deleteACourse(this.getCourseFromId(result.chosenId));
+        } else {
+          // tslint:disable-next-line: radix
+          const custId = parseInt(mode);
+          const choseCourse = this.getCourseFromId(result.chosenId);
+          const cust = this.getCustFromId(custId);
+          if (choseCourse.attendees.indexOf(custId) === -1) {
+            choseCourse.attendees.push(custId);
+            cust.paidCourses = cust.paidCourses - 1;
+            this.saveCust(cust);
+            this.saveCourse(this.selectedCourses[0]);
+          }
+        }
+      }
+    });
+
   }
 
   editCust(cust) {
@@ -202,8 +237,9 @@ export class HomeComponent implements OnInit {
     const compYear = one.year < other.year;
     const compMonth = one.year === other.year && one.month < other.month;
     const compDay = one.year === other.year && one.month === other.month && one.day < other.day;
+    const compId = one.year === other.year && one.month === other.month && one.day === other.day && one.id < other.id;
 
-    return compYear || compMonth || compDay;
+    return compYear || compMonth || compDay || compId;
   }
 
   compareCustomers(one: DbCustomer, other: DbCustomer) {
@@ -327,6 +363,8 @@ export class HomeComponent implements OnInit {
       event.source.deselectAll();
       event.option._setSelected(true);
       this.selectedCust = this.getCustFromText(event.option._text.nativeElement.innerText);
+    } else {
+      this.selectedCust = null;
     }
   }
 
@@ -336,6 +374,9 @@ export class HomeComponent implements OnInit {
       event.source.deselectAll();
       event.option._setSelected(true);
       this.selectedCustForCourse = this.getCustFromText(event.option._text.nativeElement.innerText);
+    } else {
+      this.currentCourse = null;
+      this.selectedCustForCourse = null;
     }
   }
 
@@ -424,6 +465,8 @@ export class HomeComponent implements OnInit {
         this.saveCust(cust);
         this.saveCourse(this.selectedCourses[0]);
       }
+    } else {
+      this.openCourseChoice(cust.id);
     }
   }
 
@@ -431,6 +474,8 @@ export class HomeComponent implements OnInit {
     this.getSelectedCourses();
     if (this.selectedCourses.length === 1) {
       this.deleteACourse(this.selectedCourses[0]);
+    } else {
+      this.openCourseChoice('delete');
     }
   }
 
