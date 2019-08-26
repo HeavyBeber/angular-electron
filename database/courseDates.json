@@ -1,16 +1,27 @@
 [
   {
-    "id": 3,
+    "id": 7,
     "day": 17,
     "month": 7,
     "year": 2019,
-    "attendees": [
-      10,
-      4,
-      12,
-      13
-    ],
-    "maxAttendee": 10
+    "maxAttendee": 10,
+    "attendees": []
+  },
+  {
+    "id": 8,
+    "day": 17,
+    "month": 7,
+    "year": 2019,
+    "maxAttendee": 10,
+    "attendees": []
+  },
+  {
+    "id": 9,
+    "day": 17,
+    "month": 7,
+    "year": 2019,
+    "maxAttendee": 10,
+    "attendees": []
   },
   {
     "id": 1,

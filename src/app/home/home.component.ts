@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   nextCourse: DbCourse = new DbCourse(0, 0, 0, 0, 0, []);
 
   selectedDate: Moment;
-  selectedCourses: DbCourse[];
+  selectedCourses: DbCourse[] = [];
 
   selectedCustForCourse: DbCustomer;
   currentCourse: DbCourse;
@@ -254,6 +254,7 @@ export class HomeComponent implements OnInit {
   }
 
   getSelectedDate() {
+    this.getSelectedCourses();
     if (this.selectedDate) {
       return this.selectedDate.date() + '/' + this.formatMonth(this.selectedDate.month()) + '/' + this.selectedDate.year();
     }
@@ -267,6 +268,7 @@ export class HomeComponent implements OnInit {
                                     this.selectedDate.year(),
                                     10, []);
     this.pushCourseInCourses(courseToAdd);
+    this.getSelectedCourses();
     this.saveCourses();
   }
 
@@ -423,5 +425,25 @@ export class HomeComponent implements OnInit {
         this.saveCourse(this.selectedCourses[0]);
       }
     }
+  }
+
+  deleteCourse() {
+    this.getSelectedCourses();
+    if (this.selectedCourses.length === 1) {
+      this.deleteACourse(this.selectedCourses[0]);
+    }
+  }
+
+  deleteACourse(course: DbCourse) {
+    const attendees = course.attendees;
+    for (const attendee of attendees) {
+      const cust = this.getCustFromId(attendee);
+      cust.paidCourses = cust.paidCourses + 1;
+      this.saveCust(cust);
+      this.selectedCustForCourse = undefined;
+    }
+    this.courses = this.deleteFromArray(course, this.courses);
+    this.saveCourses();
+    this.getSelectedCourses();
   }
 }

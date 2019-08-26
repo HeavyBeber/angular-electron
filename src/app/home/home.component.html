@@ -41,7 +41,7 @@
     <mat-card-actions>
       <button mat-raised-button (click)="openCustomerDialog()">{{ 'PAGES.HOME.CLIENTS.CREATE' | translate }}</button>
       <button mat-raised-button [disabled]="!selectedCust" (click)="editCust(selectedCust)">Modifier</button>
-      <button mat-raised-button [disabled]="!selectedCust" (click)="addCustToSelectedCourse(selectedCust)">Ajouter au cours</button>
+      <button mat-raised-button [disabled]="selectedCourses.length === 0" (click)="addCustToSelectedCourse(selectedCust)">Ajouter au cours</button>
       <button mat-raised-button [disabled]="!selectedCust" (click)="deleteCust()">Supprimer</button>
     </mat-card-actions>
     </mat-card>
@@ -62,7 +62,8 @@
             </mat-card-content>
             <mat-card-actions>
               <button mat-raised-button [disabled]="!selectedCustForCourse" (click)="editCust(selectedCustForCourse)">Modifier</button>
-              <button mat-raised-button [disabled]="!selectedCustForCourse" (click)="deleteFromCourse()">Supprimer</button>
+              <button mat-raised-button [disabled]="!selectedCustForCourse" (click)="deleteFromCourse()">Supprimer du cours</button>
+              <button mat-raised-button style="position: absolute; right: 1%" [disabled]="selectedCourses.length === 0" (click)="deleteCourse()">Supprimer le cours</button>
             </mat-card-actions>
           </mat-card>
 
