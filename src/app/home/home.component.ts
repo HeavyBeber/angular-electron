@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
   currentCourse: DbCourse;
   selectedCust: DbCustomer;
   chosenCourseId: number;
+  prevCustOpt: any;
+  prevCustForCourseOpt: any;
 
   constructor(public dialog: MatDialog) {
   }
@@ -360,8 +362,12 @@ export class HomeComponent implements OnInit {
 
   handleSelectionCust(event) {
     if (event.option.selected) {
+      if (this.prevCustOpt) {
+        this.prevCustOpt._setSelected(false);
+      }
       event.source.deselectAll();
       event.option._setSelected(true);
+      this.prevCustOpt = event.option;
       this.selectedCust = this.getCustFromText(event.option._text.nativeElement.innerText);
     } else {
       this.selectedCust = null;
@@ -370,9 +376,13 @@ export class HomeComponent implements OnInit {
 
   handleSelection(event, course: DbCourse) {
     if (event.option.selected) {
+      if (this.prevCustForCourseOpt) {
+        this.prevCustForCourseOpt._setSelected(false);
+      }
       this.currentCourse = course;
       event.source.deselectAll();
       event.option._setSelected(true);
+      this.prevCustForCourseOpt = event.option;
       this.selectedCustForCourse = this.getCustFromText(event.option._text.nativeElement.innerText);
     } else {
       this.currentCourse = null;

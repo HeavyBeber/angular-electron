@@ -95,7 +95,7 @@
     "puppy": "Doggo",
     "birthdate": "2019-04-03T22:00:00.000Z",
     "comments": "Chien mordeur",
-    "paidCourses": -1
+    "paidCourses": 0
   },
   {
     "id": 8,
@@ -114,4 +114,4 @@
     "comments": "Ne sait pas s'assoir",
     "paidCourses": 1
   }
-]
+]]]
