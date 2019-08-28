@@ -5,7 +5,7 @@
     "lastName": "Tunnelly",
     "puppy": "Button",
     "birthdate": "2018-11-02T23:00:00.000Z",
-    "paidCourses": 1
+    "paidCourses": 0
   },
   {
     "id": 2,
@@ -21,7 +21,7 @@
     "firstName": "Gorhendad",
     "lastName": "Tûk",
     "puppy": "Puddifoot",
-    "birthdate": "2019-02-12T23:00:00.000Z",
+    "birthdate": "2018-03-13T23:00:00.000Z",
     "paidCourses": 0
   },
   {
@@ -29,7 +29,7 @@
     "firstName": "Holfast",
     "lastName": "Goodchild",
     "puppy": "Galbassi",
-    "birthdate": "2018-09-04T22:00:00.000Z",
+    "birthdate": "2017-09-13T22:00:00.000Z",
     "paidCourses": 0
   },
   {
@@ -38,7 +38,7 @@
     "lastName": "Headstrong",
     "puppy": "Whitfoot",
     "birthdate": "2019-01-25T23:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": 1
   },
   {
     "id": 14,
@@ -54,14 +54,14 @@
     "lastName": "Hayward",
     "puppy": "Burrows",
     "birthdate": "2018-12-05T23:00:00.000Z",
-    "paidCourses": -1
+    "paidCourses": 0
   },
   {
     "id": 13,
     "firstName": "Orgulas",
     "lastName": "Brockhouse",
     "puppy": "Proudfoot",
-    "birthdate": "2019-04-23T22:00:00.000Z",
+    "birthdate": "2018-10-04T22:00:00.000Z",
     "paidCourses": 0
   },
   {
@@ -78,7 +78,7 @@
     "lastName": "Sackville",
     "puppy": "Taephowo",
     "birthdate": "2019-05-09T22:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -1
   },
   {
     "id": 7,

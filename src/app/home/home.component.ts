@@ -117,6 +117,9 @@ export class HomeComponent implements OnInit {
           const date = course.day + '/' + this.formatMonth(course.month) + '/' + course.year;
           if (confirm('Voulez-vous vraiment supprimer le cours du ' + date + ' ?')) {
             this.deleteACourse(course);
+            this._snackBar.open('Cours supprimé', 'x', {
+              duration: 5000
+            });
           }
         } else {
           // tslint:disable-next-line: radix
@@ -128,6 +131,9 @@ export class HomeComponent implements OnInit {
             cust.paidCourses = cust.paidCourses - 1;
             this.saveCust(cust);
             this.saveCourse(this.selectedCourses[0]);
+            this._snackBar.open(cust.firstName + ' ' + cust.lastName + ' ajouté au cours', 'x', {
+              duration: 5000
+            });
           }
         }
       }
@@ -312,8 +318,8 @@ export class HomeComponent implements OnInit {
     this.pushCourseInCourses(courseToAdd);
     this.getSelectedCourses();
     this.saveCourses();
-    this._snackBar.openFromComponent(HomeComponent, {
-      duration: 1000,
+    this._snackBar.open('Cours créé', 'x', {
+      duration: 5000
     });
   }
 
@@ -328,6 +334,9 @@ export class HomeComponent implements OnInit {
       if (this.isCourseSelected(course)) {
         this.selectedCourses.push(course);
       }
+    }
+    if (this.selectedCourses.length === 0) {
+      this.selectedCustForCourse = null;
     }
   }
 
@@ -351,9 +360,10 @@ export class HomeComponent implements OnInit {
     const result = [];
     for (const cust of this.customers) {
       const now = new Date(Date.now());
-      const ageInMonth = 12 * (now.getFullYear() - new Date(cust.birthdate).getFullYear()) +
-                                now.getMonth() - new Date(cust.birthdate).getMonth();
-      result.push(cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + ageInMonth + ')');
+      const ageInYear = now.getFullYear() - new Date(cust.birthdate).getFullYear();
+      const ageInMonth = (12 * ageInYear + now.getMonth() - new Date(cust.birthdate).getMonth());
+      const age = (ageInMonth < 12) ? ageInMonth : ageInYear + '.' + ageInMonth % 12;
+      result.push(cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + age + ')');
     }
     return result;
   }
@@ -432,6 +442,10 @@ export class HomeComponent implements OnInit {
 
     this.selectedCustForCourse.paidCourses = this.selectedCustForCourse.paidCourses + 1;
     this.saveCust(this.selectedCustForCourse);
+
+    this._snackBar.open(this.selectedCustForCourse.firstName + ' ' + this.selectedCustForCourse.lastName + ' retiré du cours', 'x', {
+      duration: 5000
+    });
     this.selectedCustForCourse = undefined;
   }
 
@@ -455,6 +469,9 @@ export class HomeComponent implements OnInit {
       }
       this.saveCustomers();
       this.selectedCust = undefined;
+      this._snackBar.open('Client supprimé', 'x', {
+        duration: 5000
+      });
     }
   }
 
@@ -484,6 +501,9 @@ export class HomeComponent implements OnInit {
         cust.paidCourses = cust.paidCourses - 1;
         this.saveCust(cust);
         this.saveCourse(this.selectedCourses[0]);
+        this._snackBar.open(cust.firstName + ' ' + cust.lastName + ' ajouté au cours', 'x', {
+          duration: 5000
+        });
       }
     } else {
       this.openCourseChoice(cust.id);
@@ -496,6 +516,9 @@ export class HomeComponent implements OnInit {
       const date = this.selectedCourses[0].day + '/' + this.formatMonth(this.selectedCourses[0].month) + '/' + this.selectedCourses[0].year;
       if (confirm('Voulez-vous vraiment supprimer le cours du ' + date + ' ?')) {
         this.deleteACourse(this.selectedCourses[0]);
+        this._snackBar.open('Cours supprimé', 'x', {
+          duration: 5000
+        });
       }
     } else {
       this.openCourseChoice('delete');
