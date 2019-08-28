@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { Moment } from 'moment';
 import { SelectCourseComponent } from '../select-course/select-course.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class HomeComponent implements OnInit {
   prevCustOpt: any;
   prevCustForCourseOpt: any;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, public _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -112,7 +113,11 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (mode === 'delete') {
-          this.deleteACourse(this.getCourseFromId(result.chosenId));
+          const course = this.getCourseFromId(result.chosenId);
+          const date = course.day + '/' + this.formatMonth(course.month) + '/' + course.year;
+          if (confirm('Voulez-vous vraiment supprimer le cours du ' + date + ' ?')) {
+            this.deleteACourse(course);
+          }
         } else {
           // tslint:disable-next-line: radix
           const custId = parseInt(mode);
@@ -199,7 +204,6 @@ export class HomeComponent implements OnInit {
     }
     return maxId + 1 ;
   }
-
 
   nextCustomerId() {
     let maxId = -1;
@@ -308,6 +312,9 @@ export class HomeComponent implements OnInit {
     this.pushCourseInCourses(courseToAdd);
     this.getSelectedCourses();
     this.saveCourses();
+    this._snackBar.openFromComponent(HomeComponent, {
+      duration: 1000,
+    });
   }
 
   isCourseSelected(c: DbCourse) {
@@ -429,23 +436,26 @@ export class HomeComponent implements OnInit {
   }
 
   deleteCust() {
-    const newCourses = this.courses;
-    this.courses = [];
-    for (const course of newCourses) {
-      course.attendees = this.deleteFromArray(this.selectedCust.id, course.attendees);
-      this.pushCourseInCourses(course);
-    }
-    this.saveCourses();
-
-    const newCusts = this.customers;
-    this.customers = [];
-    for (const cust of newCusts) {
-      if (cust.id !== this.selectedCust.id) {
-        this.pushCustomerInCustomers(cust);
+    const confirmMessage = 'Voulez-vous vraiment supprimer ' + this.selectedCust.firstName + ' ' + this.selectedCust.lastName + ' ?';
+    if (confirm(confirmMessage)) {
+      const newCourses = this.courses;
+      this.courses = [];
+      for (const course of newCourses) {
+        course.attendees = this.deleteFromArray(this.selectedCust.id, course.attendees);
+        this.pushCourseInCourses(course);
       }
+      this.saveCourses();
+
+      const newCusts = this.customers;
+      this.customers = [];
+      for (const cust of newCusts) {
+        if (cust.id !== this.selectedCust.id) {
+          this.pushCustomerInCustomers(cust);
+        }
+      }
+      this.saveCustomers();
+      this.selectedCust = undefined;
     }
-    this.saveCustomers();
-    this.selectedCust = undefined;
   }
 
   getTabNumbers() {
@@ -483,7 +493,10 @@ export class HomeComponent implements OnInit {
   deleteCourse() {
     this.getSelectedCourses();
     if (this.selectedCourses.length === 1) {
-      this.deleteACourse(this.selectedCourses[0]);
+      const date = this.selectedCourses[0].day + '/' + this.formatMonth(this.selectedCourses[0].month) + '/' + this.selectedCourses[0].year;
+      if (confirm('Voulez-vous vraiment supprimer le cours du ' + date + ' ?')) {
+        this.deleteACourse(this.selectedCourses[0]);
+      }
     } else {
       this.openCourseChoice('delete');
     }

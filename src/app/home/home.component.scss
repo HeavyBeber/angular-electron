@@ -19,7 +19,7 @@
     border-radius: 20px;
     max-height: 17%;
     width: 47%;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.9);
     .header {
       font-size : 3rem;
       font-weight: bold;
@@ -35,7 +35,7 @@
     padding: 1%;
     border-radius: 20px;
     width: 47%;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.9);
     height: 40%;
     .header {
       font-size : 3rem;
@@ -56,7 +56,7 @@
     margin-top: 1%;
     max-height: 52%;
     width: 97%;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.9);
 
     .header {
       font-size : 2rem;
@@ -79,7 +79,14 @@
       }
     }
   }
-
+  .editButton {
+    background-color: rgb(32, 112, 0);
+    color: white;
+  }
+  .editButton:disabled{
+    color:#a4a4a4;
+    background-color: #d5d5d5;
+  }
 }
 
 

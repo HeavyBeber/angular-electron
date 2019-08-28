@@ -15,14 +15,16 @@ html, body {
 
 .courseIsEmpty  {
   .mat-calendar-body-cell-content {
-    background: rgb(0, 255, 0);
+    background: rgb(0, 138, 0);
+    color: white;
     border-radius: 100%;
   }
 }
 
 .courseIsFull  {
   .mat-calendar-body-cell-content {
-    background: rgb(255, 0, 0);
+    background: rgba(255, 0, 0, 0.829);
+    color: white;
     border-radius: 100%;
   }
 }
@@ -32,6 +34,13 @@ html, body {
     background: rgb(177, 177, 177);
     border-radius: 100%;
   }
+}
+
+.mat-tab-label{
+  font-size: 1.5em;
+}
+.mat-tab-label-active{
+  font-weight: bold;
 }
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";

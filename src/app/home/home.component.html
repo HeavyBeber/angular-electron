@@ -34,15 +34,15 @@
       <mat-tab-group>
         <mat-tab *ngFor="let i of getTabNumbers()" label={{getTabCustomersString(i)[0].substring(0,2)}}>
           <mat-selection-list (selectionChange)="handleSelectionCust($event)">
-            <mat-list-option *ngFor="let customer of getTabCustomersString(i)"> {{customer}}</mat-list-option>
+            <mat-list-option [style.color]="getCustFromText(customer).paidCourses>-1?'black':'red'" *ngFor="let customer of getTabCustomersString(i)"> {{customer}}</mat-list-option>
           </mat-selection-list> </mat-tab>
       </mat-tab-group>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button (click)="openCustomerDialog()">{{ 'PAGES.HOME.CLIENTS.CREATE' | translate }}</button>
-      <button mat-raised-button [disabled]="!selectedCust" (click)="editCust(selectedCust)">Modifier</button>
-      <button mat-raised-button [disabled]="selectedCourses.length === 0 || !selectedCust" (click)="addCustToSelectedCourse(selectedCust)">Ajouter au cours</button>
-      <button mat-raised-button [disabled]="!selectedCust" (click)="deleteCust()">Supprimer</button>
+      <button mat-raised-button class="editButton" [disabled]="!selectedCust" (click)="editCust(selectedCust)">Modifier</button>
+      <button mat-raised-button color="primary" [disabled]="selectedCourses.length === 0 || !selectedCust" (click)="addCustToSelectedCourse(selectedCust)">Ajouter au cours</button>
+      <button mat-raised-button  style="position: absolute; right: 1%" color="warn" [disabled]="!selectedCust" (click)="deleteCust()">Supprimer</button>
     </mat-card-actions>
     </mat-card>
 
@@ -61,9 +61,9 @@
               </div>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button [disabled]="!selectedCustForCourse" (click)="editCust(selectedCustForCourse)">Modifier</button>
-              <button mat-raised-button [disabled]="!selectedCustForCourse" (click)="deleteFromCourse()">Supprimer du cours</button>
-              <button mat-raised-button style="position: absolute; right: 1%" [disabled]="selectedCourses.length === 0" (click)="deleteCourse()">Supprimer le cours</button>
+              <button mat-raised-button class="editButton" [disabled]="!selectedCustForCourse" (click)="editCust(selectedCustForCourse)">Modifier/Payer</button>
+              <button mat-raised-button color="accent" [disabled]="!selectedCustForCourse" (click)="deleteFromCourse()">Retirer du cours</button>
+              <button mat-raised-button color="warn" style="position: absolute; right: 1%" [disabled]="selectedCourses.length === 0" (click)="deleteCourse()">Supprimer le cours</button>
             </mat-card-actions>
           </mat-card>
 

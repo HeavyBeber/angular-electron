@@ -1,7 +1,7 @@
 {
   "PAGES": {
       "HOME": {
-          "TITLE": "Gestion cours d'éducation",
+          "TITLE": "Planning Education",
           "CALENDAR": {
             "TITLE": "Calendrier des cours",
             "DATEPICKER": "Choisir une date",
