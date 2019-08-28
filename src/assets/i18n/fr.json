@@ -1,0 +1,11 @@
+{
+  "PAGES": {
+      "HOME": {
+          "TITLE": "Bonjour, Monde !",
+          "CALENDAR": {
+            "TITLE": "Calendrier des cours",
+            "DATEPICKER": "Choisir une date"
+          }
+      }
+  }
+}

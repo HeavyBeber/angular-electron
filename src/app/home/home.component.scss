@@ -1,0 +1,42 @@
+.container {
+  height: 100%;
+  display: flex;
+  padding : 20px;
+
+
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+  background: url(../../assets/background.jpg) no-repeat center fixed;
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+
+  .card{
+    height: 20%;
+    padding: 0px;
+    min-width: 100%;
+    border-radius: 20px;
+    border-color: red !important;
+
+    .header {
+      padding-top:20px;
+      font-size : 3rem;
+      font-weight: bold;
+
+    }
+
+    .content {
+      padding-left: 50px;
+    }
+
+  }
+}
+
+.title {
+  color: white;
+  margin: 0;
+  padding: 50px 20px;
+  font-size:2rem;
+
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
