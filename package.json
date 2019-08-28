@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "6.1.0",
-  "description": "Angular 8 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "planeduc",
+  "version": "1.0.0",
+  "description": "Planning Education (Typescript + SASS + Hot Reload)",
+  "homepage": "https://github.com/HeavyBeber/angular-electron",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Alexandre Bernard",
+    "email": "alexandre.bernard94@gmail.com"
   },
   "keywords": [
     "angular",
