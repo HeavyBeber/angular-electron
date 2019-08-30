@@ -90,9 +90,11 @@ export class HomeComponent implements OnInit {
                                                     result.firstName,
                                                     result.lastName,
                                                     result.puppy,
+                                                    result.race,
                                                     result.birthdate,
                                                     result.comments,
-                                                    result.paidCourses));
+                                                    result.paidCourses
+                                                    ));
         this.saveCustomers();
       }
     });
@@ -149,6 +151,7 @@ export class HomeComponent implements OnInit {
         firstName: custToUpdate.firstName,
         lastName: custToUpdate.lastName,
         puppy: custToUpdate.puppy,
+        race: custToUpdate.race,
         birthdate: custToUpdate.birthdate,
         comments: custToUpdate.comments,
         paidCourses: 0,
@@ -163,6 +166,7 @@ export class HomeComponent implements OnInit {
         result.firstName,
         result.lastName,
         result.puppy,
+        result.race,
         result.birthdate,
         result.comments,
         result.paidCourses + result.stock);
@@ -353,7 +357,8 @@ export class HomeComponent implements OnInit {
     const now = new Date(Date.now());
     const ageInMonth = 12 * (now.getFullYear() - new Date(cust.birthdate).getFullYear()) +
                               now.getMonth() - new Date(cust.birthdate).getMonth();
-    return cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + ageInMonth + ')';
+    const age = (ageInMonth < 12 ) ? ageInMonth : Math.floor(ageInMonth / 12) + '.' + ageInMonth % 12;
+    return cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + cust.race + ' : ' + age + ')';
   }
 
   getCustomersString() {
@@ -362,8 +367,8 @@ export class HomeComponent implements OnInit {
       const now = new Date(Date.now());
       const ageInYear = now.getFullYear() - new Date(cust.birthdate).getFullYear();
       const ageInMonth = (12 * ageInYear + now.getMonth() - new Date(cust.birthdate).getMonth());
-      const age = (ageInMonth < 12) ? ageInMonth : ageInYear + '.' + ageInMonth % 12;
-      result.push(cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + age + ')');
+      const age = (ageInMonth < 12 ) ? ageInMonth : Math.floor(ageInMonth / 12) + '.' + ageInMonth % 12;
+      result.push(cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' ('  + cust.race + ' : ' + age + ')');
     }
     return result;
   }

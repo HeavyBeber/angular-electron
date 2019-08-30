@@ -29,6 +29,6 @@ export class CreateNewClientDialogComponent implements OnInit {
   }
 
   isValid(data: NewClientDialogData) {
-    return data.firstName && data.lastName && data.puppy && data.birthdate;
+    return data.firstName && data.lastName && data.puppy && data.birthdate && data.race;
   }
 }

@@ -4,6 +4,7 @@
     "firstName": "Amaranth",
     "lastName": "Tunnelly",
     "puppy": "Button",
+    "race": "Rottweiler",
     "birthdate": "2018-11-02T23:00:00.000Z",
     "paidCourses": 0
   },
@@ -12,6 +13,7 @@
     "firstName": "Danny",
     "lastName": "Write",
     "puppy": "Jul",
+    "race": "Rottweiler",
     "birthdate": "2018-11-09T22:00:00.000Z",
     "comments": "HSHA",
     "paidCourses": 0
@@ -21,7 +23,9 @@
     "firstName": "Gorhendad",
     "lastName": "Tûk",
     "puppy": "Puddifoot",
+    "race": "Rottweiler",
     "birthdate": "2018-03-13T23:00:00.000Z",
+    "comments": "aze\naze\naze\nazea\nzea\nzea\nzea\nzea\nzea\nze\naze",
     "paidCourses": 0
   },
   {
@@ -29,6 +33,7 @@
     "firstName": "Holfast",
     "lastName": "Goodchild",
     "puppy": "Galbassi",
+    "race": "Rottweiler",
     "birthdate": "2017-09-13T22:00:00.000Z",
     "paidCourses": 0
   },
@@ -37,6 +42,7 @@
     "firstName": "Isengrim",
     "lastName": "Headstrong",
     "puppy": "Whitfoot",
+    "race": "Rottweiler",
     "birthdate": "2019-01-25T23:00:00.000Z",
     "paidCourses": 1
   },
@@ -45,6 +51,7 @@
     "firstName": "Marmadoc",
     "lastName": "Boffin",
     "puppy": "Longhole",
+    "race": "Rottweiler",
     "birthdate": "2018-10-16T22:00:00.000Z",
     "paidCourses": -1
   },
@@ -53,6 +60,7 @@
     "firstName": "Nibs",
     "lastName": "Hayward",
     "puppy": "Burrows",
+    "race": "Rottweiler",
     "birthdate": "2018-12-05T23:00:00.000Z",
     "paidCourses": 0
   },
@@ -61,7 +69,8 @@
     "firstName": "Orgulas",
     "lastName": "Brockhouse",
     "puppy": "Proudfoot",
-    "birthdate": "2018-10-04T22:00:00.000Z",
+    "race": "Rottweiler",
+    "birthdate": "2016-06-15T22:00:00.000Z",
     "paidCourses": 0
   },
   {
@@ -69,6 +78,7 @@
     "firstName": "Prima",
     "lastName": "Lothran",
     "puppy": "Bunce",
+    "race": "Rottweiler",
     "birthdate": "2019-04-02T22:00:00.000Z",
     "paidCourses": -1
   },
@@ -77,6 +87,7 @@
     "firstName": "Prisca",
     "lastName": "Sackville",
     "puppy": "Taephowo",
+    "race": "Rottweiler",
     "birthdate": "2019-05-09T22:00:00.000Z",
     "paidCourses": -1
   },
@@ -85,6 +96,7 @@
     "firstName": "Robinia",
     "lastName": "Boffin",
     "puppy": "Gamgee",
+    "race": "Rottweiler",
     "birthdate": "2019-03-28T23:00:00.000Z",
     "paidCourses": 0
   },
@@ -93,6 +105,7 @@
     "firstName": "Roger",
     "lastName": "Halliday",
     "puppy": "Doggo",
+    "race": "Rottweiler",
     "birthdate": "2019-04-03T22:00:00.000Z",
     "comments": "Chien mordeur",
     "paidCourses": 0
@@ -102,6 +115,7 @@
     "firstName": "Samlad",
     "lastName": "Gammidge",
     "puppy": "Shensted",
+    "race": "Rottweiler",
     "birthdate": "2018-07-24T22:00:00.000Z",
     "paidCourses": 0
   },
@@ -110,6 +124,7 @@
     "firstName": "Sasha",
     "lastName": "Levandowski",
     "puppy": "Petra",
+    "race": "Rottweiler",
     "birthdate": "2019-06-04T22:00:00.000Z",
     "comments": "Ne sait pas s'assoir",
     "paidCourses": 1

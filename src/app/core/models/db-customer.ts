@@ -4,6 +4,7 @@ export class DbCustomer {
     public firstName: string,
     public lastName: string,
     public puppy: string,
+    public race: string,
     public birthdate: Date,
     public comments: string,
     public paidCourses: number
