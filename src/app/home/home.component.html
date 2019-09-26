@@ -16,7 +16,7 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
           </mat-form-field>
-          {{ 'PAGES.HOME.CALENDAR.NEXTCOURSE' | translate }} <span style="font-weight: bold">{{getNextDate()}}</span>
+          {{ 'PAGES.HOME.CALENDAR.NEXTCOURSE' | translate }} <span style="font-weight: bold">{{nextCourseDate}}</span>
         </div>
       </mat-card-content>
       <mat-card-actions>
@@ -51,7 +51,7 @@
                 {{ 'PAGES.HOME.COURSE.TITLE' | translate }} {{getSelectedDate()}}
             </mat-card-header>
             <mat-card-content  style="overflow: auto"  class="content">
-              <div *ngFor="let course of courses; index as i">
+              <div *ngFor="let course of courses">
                 <div *ngIf="isCourseSelected(course)">
                   <p><span class="attendees">Participants :</span><span class="numberOfAttendees">{{course.attendees.length}} / {{course.maxAttendee}}</span></p>
                   <mat-selection-list style="overflow: auto" (selectionChange)="handleSelection($event,course)">
