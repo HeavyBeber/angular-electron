@@ -2,121 +2,130 @@
   {
     "id": 10,
     "firstName": "Amaranth",
-    "lastName": "Tunnelly",
+    "lastName": "TUNNELLY",
     "puppy": "Button",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2018-11-02T23:00:00.000Z",
     "paidCourses": 0
   },
   {
     "id": 2,
     "firstName": "Danny",
-    "lastName": "Writer",
+    "lastName": "WRITE",
     "puppy": "Jul",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2018-11-09T22:00:00.000Z",
     "comments": "HSHA",
-    "paidCourses": 2
+    "paidCourses": 0
   },
   {
     "id": 4,
     "firstName": "Gorhendad",
-    "lastName": "Tûk",
+    "lastName": "TÛK",
     "puppy": "Puddifoot",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2018-03-13T23:00:00.000Z",
-    "comments": "aze\naze\naze\nazea\nzea\nzea\nzea\nzea\nzea\nze\naze",
-    "paidCourses": 1
+    "paidCourses": 0
   },
   {
     "id": 9,
     "firstName": "Holfast",
-    "lastName": "Goodchild",
+    "lastName": "GOODCHILD",
     "puppy": "Galbassi",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2017-09-13T22:00:00.000Z",
     "paidCourses": 0
   },
   {
     "id": 12,
     "firstName": "Isengrim",
-    "lastName": "Headstrong",
+    "lastName": "HEADSTRONG",
     "puppy": "Whitfoot",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2019-01-25T23:00:00.000Z",
-    "paidCourses": 1
+    "paidCourses": 0
   },
   {
     "id": 14,
     "firstName": "Marmadoc",
-    "lastName": "Boffin",
+    "lastName": "BOFFIN",
     "puppy": "Longhole",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2018-10-16T22:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -1
   },
   {
     "id": 11,
     "firstName": "Nibs",
-    "lastName": "Hayward",
+    "lastName": "HAYWARD",
     "puppy": "Burrows",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2018-12-05T23:00:00.000Z",
-    "paidCourses": 2
+    "paidCourses": 0
   },
   {
     "id": 13,
     "firstName": "Orgulas",
-    "lastName": "Brockhouse",
+    "lastName": "BROCKHOUSE",
     "puppy": "Proudfoot",
-    "race": "Rottweiler",
-    "birthdate": "2016-06-15T22:00:00.000Z",
-    "paidCourses": 2
+    "race": "RottWeiler",
+    "birthdate": "2018-10-04T22:00:00.000Z",
+    "paidCourses": 0
   },
   {
     "id": 6,
     "firstName": "Prima",
-    "lastName": "Lothran",
+    "lastName": "LOTHRAN",
     "puppy": "Bunce",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2019-04-02T22:00:00.000Z",
     "paidCourses": 0
   },
   {
     "id": 5,
     "firstName": "Prisca",
-    "lastName": "Sackville",
+    "lastName": "SACKVILLE",
     "puppy": "Taephowo",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2019-05-09T22:00:00.000Z",
-    "paidCourses": 1
+    "paidCourses": -1
   },
   {
     "id": 7,
     "firstName": "Robinia",
-    "lastName": "Boffin",
+    "lastName": "BOFFIN",
     "puppy": "Gamgee",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2019-03-28T23:00:00.000Z",
-    "paidCourses": 1
+    "paidCourses": 0
   },
   {
     "id": 1,
     "firstName": "Roger",
-    "lastName": "Halliday",
+    "lastName": "HALLIDAY",
     "puppy": "Doggo",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2019-04-03T22:00:00.000Z",
     "comments": "Chien mordeur",
-    "paidCourses": 2
+    "paidCourses": 0
   },
   {
     "id": 8,
     "firstName": "Samlad",
-    "lastName": "Gammidge",
+    "lastName": "GAMMIDGE",
     "puppy": "Shensted",
-    "race": "Rottweiler",
+    "race": "RottWeiler",
     "birthdate": "2018-07-24T22:00:00.000Z",
+    "paidCourses": 0
+  },
+  {
+    "id": 3,
+    "firstName": "Sasha",
+    "lastName": "LEVANDOWSKI",
+    "puppy": "Petra",
+    "race": "RottWeiler",
+    "birthdate": "2019-06-04T22:00:00.000Z",
+    "comments": "Ne sait pas s'assoir",
     "paidCourses": 1
   }
 ]

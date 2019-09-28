@@ -24,6 +24,7 @@ export class CreateNewClientDialogComponent implements OnInit {
   saveCust(): void {
     if (this.isValid(this.data)) {
       this.data.okPressed = true;
+      this.data.lastName = this.data.lastName.toUpperCase();
       this.dialogRef.close(this.data);
     }
   }

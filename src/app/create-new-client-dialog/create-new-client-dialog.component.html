@@ -39,6 +39,18 @@
     </mat-form-field>
   </div>
   <div>
+    <mat-form-field appearance="legacy">
+      <mat-label>Email</mat-label>
+      <input [(ngModel)]=data.email matInput placeholder="Email">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="legacy">
+      <mat-label>Téléphone</mat-label>
+      <input [(ngModel)]=data.phoneNumber matInput placeholder="Téléphone">
+    </mat-form-field>
+  </div>
+  <div>
       <button [disabled]=!isValid(data) (click)="saveCust()" mat-raised-button>OK</button>
       <mat-form-field class="paidCourses">
         <input matInput placeholder="Séances payées"

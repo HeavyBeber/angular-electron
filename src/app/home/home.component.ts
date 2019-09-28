@@ -85,6 +85,8 @@ export class HomeComponent implements OnInit {
                                                     result.race,
                                                     result.birthdate,
                                                     result.comments,
+                                                    result.email,
+                                                    result.phoneNumber,
                                                     result.paidCourses
                                                     )).subscribe(customers => this.customers = customers);
       }
@@ -103,6 +105,8 @@ export class HomeComponent implements OnInit {
         race: custToUpdate.race,
         birthdate: custToUpdate.birthdate,
         comments: custToUpdate.comments,
+        email: custToUpdate.email,
+        phoneNumber: custToUpdate.phoneNumber,
         paidCourses: 0,
         stock: custToUpdate.paidCourses,
       },
@@ -118,6 +122,8 @@ export class HomeComponent implements OnInit {
         result.race,
         result.birthdate,
         result.comments,
+        result.email,
+        result.phoneNumber,
         result.paidCourses + result.stock);
         this.customerService.editCustomer(custToUpdate).subscribe(customers => this.customers = customers);
       }
@@ -253,7 +259,7 @@ export class HomeComponent implements OnInit {
   getCustFromText(c: string) {
     const stringTab = c.split(/[\s,(]+/);
     for (const cust of this.customers) {
-      if (cust.firstName === stringTab[0] && cust.lastName === stringTab[1] && cust.puppy === stringTab[2]) {
+      if (cust.lastName === stringTab[0] && cust.firstName === stringTab[1] && cust.puppy === stringTab[2]) {
         return cust;
       }
     }

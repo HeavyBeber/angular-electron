@@ -87,9 +87,9 @@ export class CustomersService {
   }
 
   private compareCustomers(one: DbCustomer, other: DbCustomer) {
-    const compFirstName = one.firstName.toLowerCase() < other.firstName.toLowerCase();
-    const compLastName = one.firstName.toLowerCase() ===  other.firstName.toLowerCase() &&
-                         one.lastName.toLowerCase() < other.lastName.toLowerCase();
+    const compLastName = one.lastName.toLowerCase() < other.lastName.toLowerCase();
+    const compFirstName = one.lastName.toLowerCase() ===  other.lastName.toLowerCase() &&
+                         one.firstName.toLowerCase() < other.firstName.toLowerCase();
 
     return (compLastName || compFirstName) ? -1 : 1;
   }
@@ -119,7 +119,7 @@ export class CustomersService {
     const ageInMonth = 12 * (now.getFullYear() - new Date(cust.birthdate).getFullYear()) +
                               now.getMonth() - new Date(cust.birthdate).getMonth();
     const age = (ageInMonth < 12 ) ? ageInMonth : Math.floor(ageInMonth / 12) + '.' + ageInMonth % 12;
-    return cust.firstName + ' ' + cust.lastName + ', ' + cust.puppy + ' (' + cust.race + ' : ' + age + ')';
+    return cust.lastName + ' ' + cust.firstName + ', ' + cust.puppy + ' (' + cust.race + ' : ' + age + ')';
   }
 
 }

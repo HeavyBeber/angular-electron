@@ -7,6 +7,8 @@ export class DbCustomer {
     public race: string,
     public birthdate: Date,
     public comments: string,
+    public email: string,
+    public phoneNumber: number,
     public paidCourses: number
   ) {}
 }

@@ -6,6 +6,8 @@ export interface NewClientDialogData {
   puppy: string;
   birthdate: Date;
   comments: string;
+  email: string;
+  phoneNumber: number;
   race: string;
   stock: number;
   isEdit: boolean;
