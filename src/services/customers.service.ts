@@ -119,7 +119,8 @@ export class CustomersService {
     const ageInMonth = 12 * (now.getFullYear() - new Date(cust.birthdate).getFullYear()) +
                               now.getMonth() - new Date(cust.birthdate).getMonth();
     const age = (ageInMonth < 12 ) ? ageInMonth : Math.floor(ageInMonth / 12) + '.' + ageInMonth % 12;
-    return cust.lastName + ' ' + cust.firstName + ', ' + cust.puppy + ' (' + cust.race + ' : ' + age + ')';
+    const isStudentString = cust.isStudent ? ' (E)' : '';
+    return cust.lastName + ' ' + cust.firstName + ', ' + cust.puppy + ' (' + cust.race + ' : ' + age + ')' + isStudentString;
   }
 
 }

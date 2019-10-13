@@ -11,4 +11,5 @@ export interface NewClientDialogData {
   race: string;
   stock: number;
   isEdit: boolean;
+  isStudent: boolean;
 }

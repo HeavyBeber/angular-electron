@@ -28,11 +28,11 @@
     </mat-card>
     <mat-card class="clientCard">
       <mat-card-header class="header">
-          {{ 'PAGES.HOME.CLIENTS.TITLE' | translate }}
+          <span>Clients</span><span style="margin-left: 70%;font-size: 0.75em">{{customers.length}}</span>
       </mat-card-header>
     <mat-card-content class="content">
       <mat-tab-group>
-        <mat-tab *ngFor="let i of getTabNumbers()" label={{getTabCustomersString(i)[0].substring(0,2)}}>
+        <mat-tab *ngFor="let i of getTabNumbers()" label={{getTabTitle(i)}}>
           <mat-selection-list (selectionChange)="handleSelectionCust($event)">
             <mat-list-option [style.color]="getCustFromText(customer).paidCourses>-1?'black':'red'" *ngFor="let customer of getTabCustomersString(i)"> {{customer}}</mat-list-option>
           </mat-selection-list> </mat-tab>

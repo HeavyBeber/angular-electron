@@ -1,62 +1,65 @@
-<h1 mat-dialog-title *ngIf="!data.isEdit">Nouveau client</h1>
-<h1 mat-dialog-title *ngIf="data.isEdit">Fiche client</h1>
+<h1 mat-dialog-title>
+  <span *ngIf="!data.isEdit">Nouveau client</span>
+  <span *ngIf="data.isEdit">Fiche client</span>
+  <mat-checkbox style="margin-left: 55%" [(ngModel)]=data.isStudent>Étudiant</mat-checkbox>
+</h1>
 <div mat-dialog-content>
   <div>
-    <mat-form-field appearance="legacy">
+    <mat-form-field appearance="legacy" class="fields">
         <mat-label>Prénom</mat-label>
         <input [(ngModel)]=data.firstName matInput placeholder="Prénom">
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field appearance="legacy">
+    <mat-form-field appearance="legacy" class="fields">
         <mat-label>Nom</mat-label>
         <input [(ngModel)]=data.lastName matInput placeholder="Nom">
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field appearance="legacy">
+    <mat-form-field appearance="legacy" class="fields">
         <mat-label>Nom du chien</mat-label>
         <input [(ngModel)]=data.puppy matInput placeholder="Nom du chien">
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field appearance="legacy">
+    <mat-form-field appearance="legacy" class="fields">
         <mat-label>Race</mat-label>
         <input [(ngModel)]=data.race matInput placeholder="Race">
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field appearance="legacy">
+    <mat-form-field appearance="legacy" class="fields">
       <input matInput [(ngModel)]=data.birthdate [matDatepicker]="picker" placeholder="Date de naissance">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field appearance="legacy">
+    <mat-form-field appearance="legacy" class="fields">
       <mat-label>Commentaires</mat-label>
       <textarea [(ngModel)]=data.comments matInput placeholder="Commentaires"></textarea>
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field appearance="legacy">
+    <mat-form-field appearance="legacy" class="fields">
       <mat-label>Email</mat-label>
       <input [(ngModel)]=data.email matInput placeholder="Email">
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field appearance="legacy">
+    <mat-form-field appearance="legacy" class="fields">
       <mat-label>Téléphone</mat-label>
       <input [(ngModel)]=data.phoneNumber matInput placeholder="Téléphone">
     </mat-form-field>
   </div>
   <div>
-      <button [disabled]=!isValid(data) (click)="saveCust()" mat-raised-button>OK</button>
-      <mat-form-field class="paidCourses">
+      <mat-form-field>
         <input matInput placeholder="Séances payées"
                type="number"
                aria-label="Séances payées"
                [(ngModel)]="data.paidCourses">
       </mat-form-field><small>(stock : {{data.stock}})</small>
+      <button [disabled]=!isValid(data) (click)="saveCust()" mat-raised-button style="margin-left: 40%">OK</button>
   </div>
 </div>

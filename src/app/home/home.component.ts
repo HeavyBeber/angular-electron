@@ -73,22 +73,23 @@ export class HomeComponent implements OnInit {
         stock: 0,
         isEdit: false
       },
-      width: '300px'
+      width: '600px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.customerService.addCustomer(new DbCustomer(this.nextCustomerId(),
-                                                    result.firstName,
-                                                    result.lastName,
-                                                    result.puppy,
-                                                    result.race,
-                                                    result.birthdate,
-                                                    result.comments,
-                                                    result.email,
-                                                    result.phoneNumber,
-                                                    result.paidCourses
-                                                    )).subscribe(customers => this.customers = customers);
+          result.isStudent,
+          result.firstName,
+          result.lastName,
+          result.puppy,
+          result.race,
+          result.birthdate,
+          result.comments,
+          result.email,
+          result.phoneNumber,
+          result.paidCourses
+        )).subscribe(customers => this.customers = customers);
       }
     });
   }
@@ -99,6 +100,7 @@ export class HomeComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateNewClientDialogComponent, {
       data: {
         isEdit: true,
+        isStudent: custToUpdate.isStudent,
         firstName: custToUpdate.firstName,
         lastName: custToUpdate.lastName,
         puppy: custToUpdate.puppy,
@@ -110,22 +112,23 @@ export class HomeComponent implements OnInit {
         paidCourses: 0,
         stock: custToUpdate.paidCourses,
       },
-      width: '300px'
+      width: '600px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         custToUpdate = new DbCustomer( custToUpdate.id,
-        result.firstName,
-        result.lastName,
-        result.puppy,
-        result.race,
-        result.birthdate,
-        result.comments,
-        result.email,
-        result.phoneNumber,
-        result.paidCourses + result.stock);
-        this.customerService.editCustomer(custToUpdate).subscribe(customers => this.customers = customers);
+          result.isStudent,
+          result.firstName,
+          result.lastName,
+          result.puppy,
+          result.race,
+          result.birthdate,
+          result.comments,
+          result.email,
+          result.phoneNumber,
+          result.paidCourses + result.stock);
+          this.customerService.editCustomer(custToUpdate).subscribe(customers => this.customers = customers);
       }
    });
   }
@@ -336,6 +339,13 @@ export class HomeComponent implements OnInit {
       }
     });
     return result;
+  }
+
+  getTabTitle(i) {
+    const tabString: string[] = this.getTabCustomersString(i);
+    const first = tabString[0].substring(0, 1) + tabString[0].substring(1, 2).toLowerCase();
+    const last = tabString[tabString.length - 1].substring(0, 1) + tabString[tabString.length - 1].substring(1, 2).toLowerCase();
+    return first + '-' + last;
   }
 
   addCustToSelectedCourse(cust) {

@@ -1,6 +1,7 @@
 export class DbCustomer {
   constructor(
     public id: number,
+    public isStudent: boolean,
     public firstName: string,
     public lastName: string,
     public puppy: string,
