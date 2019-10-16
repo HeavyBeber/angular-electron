@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomersService } from '../../services/customers.service';
 import { CoursesService } from '../../services/courses.service';
 
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-home',
@@ -262,7 +264,6 @@ export class HomeComponent implements OnInit {
 
   getCustFromText(c: string) {
     const custString = c.replace(/\s/g, '');
-    console.log(custString);
     for (const cust of this.customers) {
       if (custString.includes(cust.lastName.replace(/\s/g, '')) &&
           custString.includes(cust.firstName.replace(/\s/g, '')) &&
@@ -391,4 +392,23 @@ export class HomeComponent implements OnInit {
       this.openCourseChoice('delete');
     }
   }
+
+  public captureScreen() {
+    const data = document.getElementById('contentToConvert');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      const pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      console.log('sa lut');
+      pdf.save('MYPdf.pdf'); // Generated PDF
+    });
+  }
+
 }

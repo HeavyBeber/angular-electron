@@ -54,7 +54,7 @@
     </mat-card-actions>
     </mat-card>
 
-        <mat-card class="courseCard">
+        <mat-card class="courseCard" id="contentToConvert" #content>
             <mat-card-header class="header">
                 {{ 'PAGES.HOME.COURSE.TITLE' | translate }} {{getSelectedDate()}}
             </mat-card-header>
@@ -72,6 +72,7 @@
               <button mat-raised-button class="editButton" [disabled]="!selectedCustForCourse" (click)="editCust(selectedCustForCourse)">Modifier/Payer</button>
               <button mat-raised-button color="accent" [disabled]="!selectedCustForCourse" (click)="deleteFromCourse()">Retirer du cours</button>
               <button mat-raised-button color="warn" style="position: absolute; right: 1%" [disabled]="selectedCourses.length === 0" (click)="deleteCourse()">Supprimer le cours</button>
+              <button mat-raised-button (click)="captureScreen()">capture</button>
             </mat-card-actions>
           </mat-card>
 
