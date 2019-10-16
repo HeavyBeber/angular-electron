@@ -269,6 +269,14 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  getCustomerSize() {
+    const res = this.getCustomersString().length;
+    if (res.toString().length === 1) {
+      return '0' + res;
+    }
+    return res;
+  }
+
   handleSelectionCust(event) {
     if (event.option.selected) {
       if (this.prevCustOpt) {

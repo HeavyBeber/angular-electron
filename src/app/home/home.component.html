@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <mat-toolbar color="primary">
     <span class="title">
       {{ 'PAGES.HOME.TITLE' | translate }}
@@ -29,13 +31,12 @@
     <mat-card class="clientCard">
       <mat-card-header class="header">
           <span>Clients</span>
-          <span>
-            <mat-form-field style="margin-left: 10%;font-size: 0.2em" >
-                <mat-label>"Filtrer..."</mat-label>
+          <span style="margin-left: 45%;font-size: 0.75em">{{getCustomerSize()}}</span>
+            <mat-form-field appearance="outline" style="margin-left: 4%;font-size: 0.25em;margin-top:-1%">
+                <mat-icon matPrefix>search</mat-icon>
+                <mat-label> Filtrer...</mat-label>
                 <input [(ngModel)]=customerFilter matInput placeholder="Filtrer...">
             </mat-form-field>
-          </span>
-          <span style="margin-left: 50%;font-size: 0.75em">{{customers.length}}</span>
       </mat-card-header>
     <mat-card-content class="content">
       <mat-tab-group>
