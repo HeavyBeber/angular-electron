@@ -24,7 +24,7 @@
     "firstName": "Orgulas",
     "lastName": "BROCKHOUSE",
     "puppy": "Proudfoot",
-    "race": "RottWeiler",
+    "race": "Rott weiler",
     "birthdate": "2018-10-04T22:00:00.000Z",
     "paidCourses": -1
   },
@@ -68,6 +68,7 @@
   },
   {
     "id": 12,
+    "isStudent": true,
     "firstName": "Isengrim",
     "lastName": "HEADSTRONG",
     "puppy": "Whitfoot",

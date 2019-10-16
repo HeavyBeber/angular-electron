@@ -261,9 +261,13 @@ export class HomeComponent implements OnInit {
   }
 
   getCustFromText(c: string) {
-    const stringTab = c.split(/[\s,(]+/);
+    const custString = c.replace(/\s/g, '');
+    console.log(custString);
     for (const cust of this.customers) {
-      if (cust.lastName === stringTab[0] && cust.firstName === stringTab[1] && cust.puppy === stringTab[2]) {
+      if (custString.includes(cust.lastName.replace(/\s/g, '')) &&
+          custString.includes(cust.firstName.replace(/\s/g, '')) &&
+          custString.includes(cust.puppy.replace(/\s/g, '')) &&
+          custString.includes(cust.race.replace(/\s/g, ''))) {
         return cust;
       }
     }
