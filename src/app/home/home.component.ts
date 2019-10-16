@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
 
   prevCustOpt: any;
   prevCustForCourseOpt: any;
+  customerFilter = '';
 
   constructor(public dialog: MatDialog, public _snackBar: MatSnackBar,
     private customerService: CustomersService, private courseService: CoursesService) {
@@ -256,7 +257,7 @@ export class HomeComponent implements OnInit {
   getCustomersString() {
     let result = [];
     this.customerService.getAttendeesString([-1]).subscribe(res => result = res);
-    return result;
+    return result.filter(x => x.toLowerCase().includes(this.customerFilter.toLowerCase()));
   }
 
   getCustFromText(c: string) {
@@ -324,7 +325,7 @@ export class HomeComponent implements OnInit {
   getTabNumbers() {
     const result = [];
       if (this.customers) {
-        for (let i = 0 ; i < this.customers.length / 5 ; i++ ) {
+        for (let i = 0 ; i < this.getCustomersString().length / 5 ; i++ ) {
           result.push(i);
         }
       }
