@@ -163,14 +163,18 @@ export class HomeComponent implements OnInit {
         } else {
           const custId = parseInt(mode, 10);
           let cust;
-          this.customerService.getCustomerFromId(custId).subscribe(customer =>  {
-            cust = customer;
-            this._snackBar.open(cust.firstName + ' ' + cust.lastName + ' ajouté au cours', 'x', {
-              duration: 5000
-            });
-          });
-          this.customerService.payACourse(custId).subscribe(customers => this.customers = customers);
-          this.courseService.addCustomerToACourse(custId, result.chosenId).subscribe(courses => this.courses = courses);
+          for (const course of this.selectedCourses) {
+            if (course.id === result.chosenId && course.attendees.indexOf(custId) === -1) {
+              this.customerService.getCustomerFromId(custId).subscribe(customer =>  {
+                cust = customer;
+                this._snackBar.open(cust.firstName + ' ' + cust.lastName + ' ajouté au cours', 'x', {
+                  duration: 5000
+                });
+              });
+              this.courseService.addCustomerToACourse(custId, result.chosenId).subscribe(courses => this.courses = courses);
+              this.customerService.payACourse(custId).subscribe(customers => this.customers = customers);
+            }
+          }
         }
       }
     });
