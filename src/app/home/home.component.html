@@ -54,11 +54,12 @@
     </mat-card-actions>
     </mat-card>
 
-        <mat-card class="courseCard" id="contentToConvert" #content>
+        <mat-card class="courseCard">
             <mat-card-header class="header">
-                {{ 'PAGES.HOME.COURSE.TITLE' | translate }} {{getSelectedDate()}}
+                {{ 'PAGES.HOME.COURSE.TITLE' | translate }} {{getSelectedDate()}} <button mat-raised-button style="position:absolute;right:1%;" [disabled]="selectedCourses.length === 0" (click)="captureScreen()">Export PDF</button>
             </mat-card-header>
-            <mat-card-content  style="overflow: auto"  class="content">
+            <mat-card-content style="overflow: auto"  class="content">
+              <div *ngIf="showHtmlToExport" [innerHTML]="htmlToExport"  id="contentToConvert" #content></div>
               <div *ngFor="let course of courses">
                 <div *ngIf="isCourseSelected(course)">
                   <p><span class="attendees">Participants :</span><span class="numberOfAttendees">{{course.attendees.length}} / {{course.maxAttendee}}</span></p>
@@ -72,8 +73,6 @@
               <button mat-raised-button class="editButton" [disabled]="!selectedCustForCourse" (click)="editCust(selectedCustForCourse)">Modifier/Payer</button>
               <button mat-raised-button color="accent" [disabled]="!selectedCustForCourse" (click)="deleteFromCourse()">Retirer du cours</button>
               <button mat-raised-button color="warn" style="position: absolute; right: 1%" [disabled]="selectedCourses.length === 0" (click)="deleteCourse()">Supprimer le cours</button>
-              <button mat-raised-button (click)="captureScreen()">capture</button>
             </mat-card-actions>
           </mat-card>
-
 </div>

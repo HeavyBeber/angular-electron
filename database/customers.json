@@ -6,7 +6,7 @@
     "puppy": "Longhole",
     "race": "RottWeiler",
     "birthdate": "2018-10-16T22:00:00.000Z",
-    "paidCourses": -1
+    "paidCourses": 0
   },
   {
     "id": 7,
@@ -16,7 +16,7 @@
     "puppy": "Gamgee",
     "race": "RottWeiler",
     "birthdate": "2019-03-28T23:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -3
   },
   {
     "id": 13,
@@ -26,7 +26,7 @@
     "puppy": "Proudfoot",
     "race": "Rott weiler",
     "birthdate": "2018-10-04T22:00:00.000Z",
-    "paidCourses": -1
+    "paidCourses": -2
   },
   {
     "id": 8,
@@ -36,7 +36,7 @@
     "puppy": "Shensted",
     "race": "RottWeiler",
     "birthdate": "2018-07-24T22:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -2
   },
   {
     "id": 9,
@@ -45,7 +45,7 @@
     "puppy": "Galbassi",
     "race": "RottWeiler",
     "birthdate": "2017-09-13T22:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -3
   },
   {
     "id": 1,
@@ -64,7 +64,7 @@
     "puppy": "Burrows",
     "race": "RottWeiler",
     "birthdate": "2018-12-05T23:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -1
   },
   {
     "id": 12,
@@ -74,7 +74,7 @@
     "puppy": "Whitfoot",
     "race": "RottWeiler",
     "birthdate": "2019-01-25T23:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -1
   },
   {
     "id": 3,
@@ -84,7 +84,7 @@
     "race": "RottWeiler",
     "birthdate": "2019-06-04T22:00:00.000Z",
     "comments": "Ne sait pas s'assoir",
-    "paidCourses": 1
+    "paidCourses": -1
   },
   {
     "id": 6,
@@ -93,7 +93,7 @@
     "puppy": "Bunce",
     "race": "RottWeiler",
     "birthdate": "2019-04-02T22:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -2
   },
   {
     "id": 5,
@@ -111,7 +111,7 @@
     "puppy": "Button",
     "race": "RottWeiler",
     "birthdate": "2018-11-02T23:00:00.000Z",
-    "paidCourses": 0
+    "paidCourses": -2
   },
   {
     "id": 4,
@@ -130,6 +130,6 @@
     "race": "RottWeiler",
     "birthdate": "2018-11-09T22:00:00.000Z",
     "comments": "HSHA",
-    "paidCourses": 0
+    "paidCourses": -1
   }
 ]

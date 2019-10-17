@@ -39,6 +39,8 @@ export class HomeComponent implements OnInit {
   prevCustOpt: any;
   prevCustForCourseOpt: any;
   customerFilter = '';
+  htmlToExport: string;
+  showHtmlToExport: boolean;
 
   constructor(public dialog: MatDialog, public _snackBar: MatSnackBar,
     private customerService: CustomersService, private courseService: CoursesService) {
@@ -393,22 +395,41 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  public captureScreen() {
-    const data = document.getElementById('contentToConvert');
-    html2canvas(data).then(canvas => {
-      // Few necessary setting options
-      const imgWidth = 208;
-      const pageHeight = 295;
-      const imgHeight = canvas.height * imgWidth / canvas.width;
-      const heightLeft = imgHeight;
 
-      const contentDataURL = canvas.toDataURL('image/png');
-      const pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-      const position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      console.log('sa lut');
-      pdf.save('MYPdf.pdf'); // Generated PDF
-    });
+
+  public captureScreen() {
+    const customerTable: string[] = [];
+    // tslint:disable-next-line: forin
+    for (const course of this.selectedCourses) {
+      for (const cust of this.getAttendees(course)) {
+        customerTable.push(cust);
+      }
+    }
+    this.htmlToExport = '<table><caption>JOUR</caption>';
+    for (const custString of customerTable) {
+      this.htmlToExport += '<tr><td>' + custString + '</td></tr>';
+    }
+    this.htmlToExport += '</table>';
+    this.showHtmlToExport = true;
+    setTimeout(() => {
+      const data = document.getElementById('contentToConvert');
+      html2canvas(data).then(canvas => {
+        // Few necessary setting options
+        const imgWidth = 208;
+        const pageHeight = 295;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        const heightLeft = imgHeight;
+
+        const contentDataURL = canvas.toDataURL('image/png');
+        const pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+        const position = 0;
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+        console.log('sa lut');
+        pdf.save('MYPdf.pdf'); // Generated PDF
+      });
+      this.showHtmlToExport = false;
+    }, 10);
+
   }
 
 }
