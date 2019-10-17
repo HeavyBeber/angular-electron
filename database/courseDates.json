@@ -8,15 +8,5 @@
     "attendees": [
       12
     ]
-  },
-  {
-    "id": 1,
-    "day": 31,
-    "month": 9,
-    "year": 2019,
-    "maxAttendee": 10,
-    "attendees": [
-      13
-    ]
   }
 ]
