@@ -402,16 +402,27 @@ export class HomeComponent implements OnInit {
 
 
   public captureScreen() {
-    const customerTable: string[] = [];
+    const customerTable = [];
     // tslint:disable-next-line: forin
-    for (const course of this.selectedCourses) {
-      for (const cust of this.getAttendees(course)) {
-        customerTable.push(cust);
+    for (const course in this.selectedCourses) {
+      for (const cust of this.getAttendees(this.selectedCourses[course])) {
+        const fullCust = this.getCustFromText(cust);
+        // tslint:disable-next-line: radix
+        customerTable.push({'Cours' : Number.parseInt(course) + 1,
+                            'Number': fullCust.phoneNumber ? fullCust.phoneNumber : '',
+                            'Client': cust,
+                            'Stock': fullCust.paidCourses});
       }
     }
-    this.htmlToExport = '<table><caption>JOUR</caption>';
-    for (const custString of customerTable) {
-      this.htmlToExport += '<tr><td>' + custString + '</td></tr>';
+    this.htmlToExport = '<table><caption>Cours du : ' + this.getSelectedDate() + '</caption>';
+    this.htmlToExport += '<tr><td>Cours</td><td>Numéro</td><td>Client</td><td>Cours restant</td></tr>';
+    for (const cust of customerTable) {
+      this.htmlToExport += '<tr>' +
+                              '<td>' + cust.Cours + '</td>' +
+                              '<td>' + cust.Number + '</td>' +
+                              '<td>' + cust.Client + '</td>' +
+                              '<td>' + cust.Stock + '</td>' +
+                            '</tr>';
     }
     this.htmlToExport += '</table>';
     this.showHtmlToExport = true;
@@ -419,8 +430,8 @@ export class HomeComponent implements OnInit {
       const data = document.getElementById('contentToConvert');
       html2canvas(data).then(canvas => {
         // Few necessary setting options
-        const imgWidth = 208;
-        const pageHeight = 295;
+        const imgWidth = 500;
+        const pageHeight = 1000;
         const imgHeight = canvas.height * imgWidth / canvas.width;
         const heightLeft = imgHeight;
 
@@ -428,11 +439,10 @@ export class HomeComponent implements OnInit {
         const pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
         const position = 0;
         pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-        console.log('sa lut');
-        pdf.save('MYPdf.pdf'); // Generated PDF
+        pdf.save('Cours_du_' + this.getSelectedDate() + '.pdf'); // Generated PDF
       });
       this.showHtmlToExport = false;
-    }, 10);
+    }, 20);
 
   }
 
