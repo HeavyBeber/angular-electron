@@ -73,7 +73,7 @@ export class CustomersService {
       const payload = {
         path: `databases/${DATABASE_ID}/query`,
         method: 'POST',
-        ID: '2'
+        filter: '{ID: 2'
       }
       const customer = await this.notion.request(payload);
       console.log(customer);
